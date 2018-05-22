@@ -28,4 +28,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation files('libs/nineoldandroids.jar')
+    implementation 'com.android.support:support-annotations:27.1.1'
 }
