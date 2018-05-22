@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HelloGitHub</string>
+    <string name="title_activity_text_view">TextViewActivity</string>
+    <string name="title_activity_my_view">MyViewActivity</string>
 </resources>

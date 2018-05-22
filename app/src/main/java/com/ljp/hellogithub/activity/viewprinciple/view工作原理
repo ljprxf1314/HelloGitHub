@@ -1,0 +1,24 @@
+一、⑸⑹⑺⑻
+二、MeasureSpec:
+     1.SpceSize:某种测量模式下的规格大小
+     2.SpceMode:三种测量模式
+         UNSPECIFIED:父容器不对view有任何限制,要多大给多大,这种情况一般用于系统内部,表示一种测量状态
+         EXACTLY:父容器已经检测出view所需要的精确大小,这个时候View的最终大小就是SpceSize所指定的值。
+                 它对应LayoutParams中的match_parent和具体数值这两种模式
+         AT_MOST:父容器指定了一个可用大小即SpecSize,view的大小不能大于这个值,具体是什么值要看不同View
+                 的具体实现。它对应LayoutParams中的warp_content。
+三、View的工作流程：
+     1.如何完整的获取View的宽高:
+       ⑴onWindowFocusChanged:View已经初始化完毕,宽/高已经准备好了。需要注意的是onWindowFocusChanged
+            会被调用多次，当activity的窗口失去和获得焦点时均会被调用一次。
+       ⑵view.post(runnable);
+       ⑶ViewTreeObserver: 使用OnGlobalLayoutListener监听,onGlobalLayout方法将会被回调,view树改变也
+            会多次调用onGlobalLayout方法。
+       ⑷view.measure(int widthMeasureSpec,int heightMeasureSpec)
+     2.View的测量宽/高和最终宽/高有什么区别?(getMeasuredWidht和getWidht)
+       在View的默认实现中，View的测量宽/高和最终宽/高是相等的,只不过测量宽/高的赋值实际稍微早一些。
+     3.draw过程:
+       ⑴绘制背景backgroup.draw(canvas)
+       ⑵绘制自己(onDraw)
+       ⑶绘制children(dispatchDraw)
+       ⑷绘制装饰(onDrawScrollBars)

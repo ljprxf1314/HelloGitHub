@@ -1,0 +1,76 @@
+一、View的基础知识:
+1.MotionEvent:手指解除屏幕后所产生的一系列事件
+  --ACTION_DOWM:手指刚接触屏幕
+  --ACTION_MOVE:手指在屏幕移动
+  --ACTION_UP:手指从屏幕松开一瞬间
+
+  --getX/getY:返回的相对于当前view左上角的x和y坐标,
+    而getRawX/getRawY返回的是相对于手机屏幕左上角x和y坐标
+
+2.TouchSlop:系统所能识别出的被认为是滑动的最小距离
+3.VelocityTracker:速度追踪,用于追踪手指在滑动过程中的速度,包括水平和垂直方向
+                  速度 = (终点位置 - 起点位置) / 时间段;
+4.GestureDetector:手势检测,用于辅助检测用户的单机、双击、滑动和长按等行动
+5.Scroller:弹性滑动对象,用于实现view的弹性滑动
+
+二、View的滑动:
+  1.scrollBy:它实现了基于当前位置的相对滑动,scrollTo:则实现了基于所传递参数的绝对滑动
+    scrollBy实际实现也是调用了scrollTo方法
+
+三、View的事件分发机制:(传递顺序Activity-->Window-->View)
+  1.点击事件的分发由三个很重的方法来共同完成:dispatchTouchEvent、onInterceptTouchEvent和
+   onTouchEvent。
+  2.
+  public boolean dispatchTouchEvent(MotionEvent ev)：
+    用来进行事件分发。如果事件能传递给当前view，那么此方法一定会被调用，返回结果受当前View的
+    onTouchEvent和下级View的dispatchTouchEvent方法的影响，表示是否消耗当前事件
+
+  public boolean onInterceptTouchEvent(MotionEvent ev)：
+    在上述方法内部调用，用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件
+    序列当中，此方法不会被再次调用，返回结果如果表示是否拦截当前事件。
+
+  public boolean onTouchEvent(MotionEvent ev)：
+    在displayTouchEvent方法中调用，用来处理点击事件，返回结果表示是否消耗当前事件，如果不消耗，
+    则在同一个事件序列中，当前View无法再次接收到事件。
+
+  上述三个方法的关系伪代码:
+  public boolean dispatchTouchEvent(MotionEvent ev){
+      boolean consume = false;
+      if(onInterceptTouchEvent(ev)){
+         consume = onTouchEvent(ev);
+      }else{
+         consume = child.dispatchMotionEvent(ev);
+      }
+      return consume;
+  }
+
+
+  3.返回false为不处理，true是处理这个事件。
+
+  4.可点击的View其CLICKABLE为true，不可点击的View的CLICKABLE为false。比如Button是可点击的,
+    TextView是不可点击的。另外，setOnClickListener会自动将View的clickable设为true，
+    setOnLongClickListener则自动会将View的LONG_CLICKABLE设置为true。
+
+  5.传递过程遵循如下顺序:activity-->window-->view
+
+  6.如果一个view设置了onTouchListener，那么onTouchListener中的onTouch方法会被调用；onTouch
+    如果返回false，那么onTouchEvent方法会被调用，如果返回true则onTouchEvent方法不会被调用；
+    如果onTouchEvent方法被调用，其中设置的OnClickListener方法也会被调用，OnClickListener的优先级
+    最低，处在事件传递的尾端。
+
+四、View的滑动冲突:
+   1.场景1--外部滑动方向和内部滑动方向不一致
+     场景2--外部滑动方向和内部滑动方向一致
+     场景3--上面两种情况的嵌套
+   2.滑动冲突解决方式:
+     外部拦截法:在父容器中的onInterceptTouchEvent方法判断是否需要
+     内部拦截法:这种方法与android中的事件分发不一致，需要配合requestDisallowInterceptTouchEvent
+               方法才能正常工作。
+               true:为不拦截;false请求拦截。
+
+
+练习:(学习一下案例,增强知识掌握)
+  1.学习开发艺术中的view滑动处理案例
+  2.学习scrollview弹性滑动案例
+  3.学习金融项目中的tagView自定义控件案例
+
