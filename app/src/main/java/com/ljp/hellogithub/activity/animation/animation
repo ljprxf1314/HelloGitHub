@@ -1,0 +1,35 @@
+一、Viwe动画种类(4种):
+    TranslateAnimation、ScaleAnimation、RotateAnimation和AlphaAnimation。
+    移动view、放大或缩小、旋转view和改变view的透明度
+   属性:
+    android:interpolator:表示动画集合所采用的插值器,插值器影响动画的速度,比如非匀速动画就需要通过插值器
+                         来控制动画的播放过程
+    android:shareInterpolator:表示集合中的动画是否和集合共享同一个插值器,如果集合不指定插值器,那么子动
+                         画就需要单独制定所需的插值器或者使用默认值
+    android:duration:动画持续时间
+    android:fillAfter:动画结束以后View是否停留在结束为止,true表示view停留在结束位置,false则不停留
+二、自定义动画:
+三、帧动画:AnimationDrawable
+         图片xml放在drawable下面
+四、动画的特殊使用场景:
+   1.LayoutAnimation:
+   2.activity切换界面动画:
+     用到overridePendingTransition(int enterAnim,int exitAnim),这个方法必须在startActivity(Intent)
+     或者finish()之后被调用才能生效
+     (1)enterAnim--activity被打开时,所需的动画资源
+     (2)exitAnim--activity被暂停时,调用的动画资源
+   3.fragment切换动画可以通过FragmentTransaction中的setCustomAnimations()方法来添加切换动画
+五、属性动画:也可以用Nineoldandroids动画兼容库,兼容api11
+   1.比较常用的几个动画类是:ValueAnimator、ObjectAnimator和SetAnimator。
+   2.也可在xml中定义属性动画,放在animator文件夹下面,属性:
+     android:propertyName--表示属性动画的作用对象的属性的名称;
+     android:valueFrom--表示属性的起始值;
+     android:valueTo--表示属性的结束值;
+     android:startOffset--表示动画的延迟时间,当动画开始后,需要延迟多少毫秒才会真正播放此动画;
+     android:repeatCount--表示动画的重复次数,默认为0,-1为无限循环;
+     android:repeatMode--表示动画重复的模式,有两个选项repeat和reverse,分别表示连续重复和逆向重复。
+                         逆向重复表示第一次播放完后,第二次会倒着播放,第三次再重头开始播放,第四次再倒着播放;
+     android:valueType--表示android:propertyName所指定的属性的类型,有"intType"和"floatType"两个可选项
+                        android:propertyName所指定的属性表示的是颜色,则不需要指定valueType,系统会自动对
+                        颜色的属性做处理
+

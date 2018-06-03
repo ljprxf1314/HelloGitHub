@@ -18,10 +18,22 @@
             </intent-filter>
         </activity>
 
+        <!--滑动冲突-外部拦截-->
         <activity android:name=".activity.viewclicksystem.Demo1Activity"/>
+        <!--滑动冲突-内部拦截-->
         <activity android:name=".activity.viewclicksystem.Demo2Activity"/>
         <activity android:name=".activity.textview.TextViewSpannableActivity"/>
         <activity android:name=".activity.viewclicksystem.MyViewActivity"/>
+
+        <!--service demo-->
+        <activity android:name=".activity.service.ServiceDemoActivity"/>
+
+        <!--动画-->
+        <activity android:name=".activity.animation.AnimationMainActivity"/>
+        <activity android:name=".activity.animation.LayoutAnimationActivity"/>
+        <activity android:name=".activity.animation.AnimatorActivity"/>
+
+        <service android:name=".activity.service.HelloService"/>
     </application>
 
 </manifest>

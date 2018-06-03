@@ -20,4 +20,16 @@
         android:layout_height="wrap_content"
         android:text="view的事件体系"/>
 
+    <Button
+        android:id="@+id/btn_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MySercvice"/>
+
+    <Button
+        android:id="@+id/btn_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="动画"/>
+
 </LinearLayout>

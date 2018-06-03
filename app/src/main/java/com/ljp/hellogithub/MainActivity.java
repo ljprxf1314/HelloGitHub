@@ -1,10 +1,11 @@
 package com.ljp.hellogithub;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.ljp.hellogithub.activity.animation.AnimationMainActivity;
+import com.ljp.hellogithub.activity.service.ServiceDemoActivity;
 import com.ljp.hellogithub.activity.textview.TextViewSpannableActivity;
 import com.ljp.hellogithub.activity.viewclicksystem.MyViewActivity;
 import com.ljp.hellogithub.base.BaseActivity;
@@ -27,7 +28,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_activity, R.id.btn_my_view})
+    @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service,R.id.btn_animation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_activity:
@@ -35,6 +36,12 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_my_view:
                 startActivity(MyViewActivity.class);
+                break;
+            case R.id.btn_service:
+                startActivity(ServiceDemoActivity.class);
+                break;
+            case R.id.btn_animation:
+                startActivity(AnimationMainActivity.class);
                 break;
         }
     }

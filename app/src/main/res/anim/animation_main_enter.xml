@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:fillAfter="true"
+     android:zAdjustment="normal">
+
+    <translate
+        android:duration="5000"
+        android:fromXDelta="-100%"
+        android:fromYDelta="-100%"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:toXDelta="0"
+        android:toYDelta="0"/>
+
+     <scale
+         android:duration="1000"
+         android:fromXScale="0"
+         android:fromYScale="0"
+         android:toXScale="1"
+         android:toYScale="1"
+         android:pivotX="50%p"
+         android:pivotY="50%p"/>
+
+     <rotate
+         android:duration="2000"
+         android:fromDegrees="0"
+         android:pivotX="50%p"
+         android:pivotY="50%p"
+         android:toDegrees="360"/>
+         <!--50%p:表示相对于父容器-->
+         <!--50:则表示距离某一个边多少像素-->
+
+     <alpha
+         android:duration="2000"
+         android:fromAlpha="0.5"
+         android:toAlpha="1"/>
+</set>
