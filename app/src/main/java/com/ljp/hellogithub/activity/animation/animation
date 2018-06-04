@@ -32,4 +32,23 @@
      android:valueType--表示android:propertyName所指定的属性的类型,有"intType"和"floatType"两个可选项
                         android:propertyName所指定的属性表示的是颜色,则不需要指定valueType,系统会自动对
                         颜色的属性做处理
+    3.插值器和估值器:interpolator、evaluator
+    4.属性动画的监听:
+      主要两个接口AnimatorUpdateListener和AnimatorListener
+    5.对任意属性做动画
+      属性动画要求动画作用的对象提供该属性的set和get方法,比如对object的属性abc做动画,如果想让动画生效,要同时
+      满足以下两个条件:
+      (1)object必须要提供setAbc方法,如果动画的时候没有传递初始值,那么还要提供getAbc方法,因为系统要去取abc属
+         性的初始值(如果这条不满足,程序会直接crash)
+      (2)object的setAbc对属性abc所做的改变必需能够通过某种方法反映出来,比如带来UI的改变之类的(如果这条件不满
+         足,动画无效果但不会crash)
+
+      对于属性没有起作用或者目标view没有这个属性时谷歌给出了三个解决方法:
+      (1)给你的对象加上get和set方法,如果你有权限的话;
+      (2)用一个类来包装原始对象,间接为其提供get和set方法;
+      (3)采用ValueAnimator,监听动画过程,自己实现属性的改变;
+
+
+    View的requestLayout方法的作用:
+    　如果View对应的位置已经发生了变化，原来被他覆盖的内容需要被显示出来。这时，如果只重新绘制当前View，已经起不到效果。这就需要requestLayout来实现重绘当前View和父View，甚至更上层的View，以此类推。
 
