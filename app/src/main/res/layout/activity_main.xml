@@ -12,18 +12,21 @@
         android:id="@+id/btn_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="textView_spannable样式"/>
 
     <Button
         android:id="@+id/btn_my_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="view的事件体系"/>
 
     <Button
         android:id="@+id/btn_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="MySercvice"/>
 
     <Button

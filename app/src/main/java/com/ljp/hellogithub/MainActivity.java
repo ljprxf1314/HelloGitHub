@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
     }
 
     @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service,R.id.btn_animation})
