@@ -34,6 +34,10 @@
         <activity android:name=".activity.animation.AnimatorActivity"/>
 
         <service android:name=".activity.service.HelloService"/>
+
+        <!--====UI布局activity===-->
+        <activity android:name=".ui.UIActivity"/>
+        <activity android:name=".ui.constraint.ConstraintLayoutActivity"/>
     </application>
 
 </manifest>

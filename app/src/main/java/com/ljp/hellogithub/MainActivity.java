@@ -9,6 +9,7 @@ import com.ljp.hellogithub.activity.service.ServiceDemoActivity;
 import com.ljp.hellogithub.activity.textview.TextViewSpannableActivity;
 import com.ljp.hellogithub.activity.viewclicksystem.MyViewActivity;
 import com.ljp.hellogithub.base.BaseActivity;
+import com.ljp.hellogithub.ui.UIActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +30,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service,R.id.btn_animation})
+    @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service,R.id.btn_animation,R.id.btn_ui})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_activity:
@@ -43,6 +44,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_animation:
                 startActivity(AnimationMainActivity.class);
+                break;
+            case R.id.btn_ui:
+                startActivity(UIActivity.class);
                 break;
         }
     }

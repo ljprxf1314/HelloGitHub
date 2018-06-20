@@ -1,0 +1,53 @@
+constraint属性:
+constraint中0dp默认是match_parent
+layout_constraintLeft_toLeftOf:当我们希望控件A与控件B左侧对齐时，就可以使用该属性。
+layout_constraintHorizontal_weight:设置占据的比例
+layout_constraintHorizontal_chainStyle:链的展示效果,有三个值:默认spread、packed、spread_inside
+layout_constraintHorizontal_bias:水平偏移
+layout_constraintVertical_bias:垂直偏移
+
+鸿洋博客:https://blog.csdn.net/lmj623565791/article/details/78011599?utm_source=tuicool&utm_medium=referral
+郭霖博客:https://blog.csdn.net/guolin_blog/article/details/53122387
+
+
+
+
+
+layout_constraintLeft_toLeftOf
+layout_constraintLeft_toRightOf
+layout_constraintRight_toLeftOf
+layout_constraintRight_toRightOf
+layout_constraintTop_toTopOf
+layout_constraintTop_toBottomOf
+layout_constraintBottom_toTopOf
+layout_constraintBottom_toBottomOf
+
+# 即文章的baseline对齐
+layout_constraintBaseline_toBaselineOf
+
+# 与left,right类似
+layout_constraintStart_toEndOf
+layout_constraintStart_toStartOf
+layout_constraintEnd_toStartOf
+layout_constraintEnd_toEndOf
+
+# margin不需要解释
+android:layout_marginStart
+android:layout_marginEnd
+android:layout_marginLeft
+android:layout_marginTop
+android:layout_marginRight
+android:layout_marginBottom
+
+layout_constraintHorizontal_bias
+layout_constraintVertical_bias
+
+layout_constraintHorizontal_chainStyle
+layout_constraintVertical_chainStyle
+
+layout_constraintVertical_weight
+
+Guideline:
+ layout_constraintGuide_begin:即可认为距离顶部30dp的地方有个辅助线，根据orientation来决定是横向还是纵向。
+ layout_constraintGuide_end:即为距离底部。
+ layout_constraintGuide_percent:百分比
