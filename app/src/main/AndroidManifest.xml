@@ -38,6 +38,8 @@
         <!--====UI布局activity===-->
         <activity android:name=".ui.UIActivity"/>
         <activity android:name=".ui.constraint.ConstraintLayoutActivity"/>
+        <activity android:name=".ui.RecyclerViewActivity"/>
+
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.ljp.hellogithub.activity.animation;
 
-import android.animation.AnimatorInflater;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.IntEvaluator;
@@ -9,17 +10,22 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * <pre>
@@ -38,6 +44,18 @@ public class AnimatorActivity extends BaseActivity {
     ImageView mIvPic;
     @BindView(R.id.btn2)
     Button mBtn2;
+    @BindView(R.id.tv_left)
+    TextView mTvLeft;
+    @BindView(R.id.iv_switch)
+    ImageView mIvSwitch;
+    @BindView(R.id.tv_right)
+    TextView mTvRight;
+    @BindView(R.id.cl)
+    ConstraintLayout mCl;
+
+    private boolean isCartOut = false;//true:调出仓库 false:调入仓库
+    //动画插值器
+    OvershootInterpolator mOvershootInterpolator = new OvershootInterpolator();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,36 +107,89 @@ public class AnimatorActivity extends BaseActivity {
         set.start();
 
         //xml文件定义属性动画
-//        AnimatorSet animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.object01);
-//        animatorSet.setTarget(mBtn2);
-//        animatorSet.start();
+        //        AnimatorSet animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.object01);
+        //        animatorSet.setTarget(mBtn2);
+        //        animatorSet.start();
 
         //给属性添加动画
         mBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //第二种自定义包装类
-//                ViewWrapper viewWrapper = new ViewWrapper(mBtn2);
-//                ObjectAnimator.ofInt(viewWrapper,"width",500).setDuration(5000).start();
+                //                ViewWrapper viewWrapper = new ViewWrapper(mBtn2);
+                //                ObjectAnimator.ofInt(viewWrapper,"width",500).setDuration(5000).start();
                 //第三种使用valueAnimator方法
                 performAnimate(mBtn2, mBtn2.getWidth(), 500);
             }
         });
     }
 
-    private static class ViewWrapper{
+    @OnClick({R.id.iv_switch})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_switch:
+                ObjectAnimator oaLeft;
+                ObjectAnimator oaRight;
+                //动画集合
+                AnimatorSet setSwitch = new AnimatorSet();
+                setSwitch.playSequentially(
+                        ObjectAnimator.ofFloat(mIvSwitch, "rotation", 0, 180));
+                setSwitch.setDuration(1000);//设置的时间是每个动画的执行时间
+                setSwitch.start();
+
+                if (isCartOut) {
+                    Log.e("translation切换", "left" + mTvLeft.getLeft());
+                    oaLeft = ObjectAnimator.ofFloat(mTvLeft, "translationX", mTvLeft.getLeft());
+                    oaRight = ObjectAnimator.ofFloat(mTvRight, "translationX", mTvLeft.getLeft());
+                    isCartOut = false;
+                } else {
+                    Log.e("translation切换", "left" + (mTvRight.getLeft() - mTvLeft.getLeft()) + "--right" +
+                            (mTvLeft.getLeft() - mTvRight.getLeft()));
+                    oaLeft = ObjectAnimator.ofFloat(mTvLeft, "translationX", (mTvRight.getLeft() - mTvLeft.getLeft()));
+                    oaRight = ObjectAnimator.ofFloat(mTvRight, "translationX", (mTvLeft.getLeft() - mTvRight.getLeft()));
+                    isCartOut = true;
+                }
+                oaLeft.setInterpolator(mOvershootInterpolator);
+                oaLeft.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        Log.e("translation结束", "left:" + mTvLeft.getLeft() + "--right" + mTvRight.getLeft());
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        Log.e("translation开始", "left:" + mTvLeft.getLeft() + "--right" + mTvRight.getLeft());
+                    }
+                });
+                oaLeft.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+
+                    }
+                });
+                oaLeft.setDuration(1000).start();
+
+                oaRight.setInterpolator(mOvershootInterpolator);
+                oaRight.setDuration(1000).start();
+                break;
+        }
+    }
+
+    private static class ViewWrapper {
         private View mTrager;
 
         public ViewWrapper(View trager) {
             mTrager = trager;
         }
 
-        public void setWidth(int width){
+        public void setWidth(int width) {
             mTrager.getLayoutParams().width = width;
             mTrager.requestLayout();
         }
 
-        public int getWidth(){
+        public int getWidth() {
             return mTrager.getLayoutParams().width;
         }
     }

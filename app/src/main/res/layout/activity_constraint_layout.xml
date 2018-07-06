@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/banner"
         android:layout_width="0dp"
@@ -13,10 +12,115 @@
         android:background="#765"
         android:gravity="center"
         android:text="Banner"
-        app:layout_constraintDimensionRatio="H,16:6"
+        app:layout_constraintDimensionRatio="H,16:9"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:id="@+id/ll_purchase_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ll_purchase_apply">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="采购查询"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_purchase_apply"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="@id/ll_purchase_search"
+            app:layout_constraintRight_toLeftOf="@+id/ll_allot_search">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="采购申请"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_allot_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="@id/ll_purchase_apply"
+            app:layout_constraintRight_toLeftOf="@+id/ll_allot_apply">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="调拨查询"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_allot_apply"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="@id/ll_allot_search"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="调拨申请"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl01"
@@ -108,10 +212,10 @@
         android:gravity="center"
         android:text="Tab1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/tab2"
-        app:layout_constraintHorizontal_weight="2"
-    app:layout_constraintHorizontal_chainStyle="spread"
     />
 
     <TextView
@@ -122,10 +226,10 @@
         android:gravity="center"
         android:text="Tab2"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/tab1"
         app:layout_constraintRight_toLeftOf="@id/tab3"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintHorizontal_chainStyle="spread"
     />
 
     <TextView
@@ -136,10 +240,10 @@
         android:gravity="center"
         android:text="Tab3"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/tab2"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintHorizontal_chainStyle="spread"
     />
 
     <TextView
@@ -151,7 +255,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintVertical_bias="0.9"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_h"
@@ -165,15 +269,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2"
-    />
+        app:layout_constraintGuide_percent="0.2"/>
 
     <TextView
+        android:id="@+id/tv_guideline_left"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="#F99"
         app:layout_constraintLeft_toRightOf="@id/guideline_w"
-        app:layout_constraintTop_toBottomOf="@id/guideline_h" />
+        app:layout_constraintTop_toBottomOf="@id/guideline_h"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Circular positioning(圆形约束)"
+        app:layout_constraintCircle="@id/tv_guideline_left"
+        app:layout_constraintCircleAngle="45"
+        app:layout_constraintCircleRadius="60dp"/>
 
 
 </android.support.constraint.ConstraintLayout>

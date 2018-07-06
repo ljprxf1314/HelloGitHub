@@ -10,10 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="属性动画"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_editor_absoluteX="35dp"
-        app:layout_editor_absoluteY="27dp"/>
+        android:text="属性动画"/>
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
@@ -21,26 +18,27 @@
         android:text="LayoutAnimation"
         android:textAllCaps="false"
         app:layout_constraintLeft_toRightOf="@id/button2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button2"/>
+        app:layout_constraintRight_toRightOf="parent"/>
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="帧动画开始"
+        app:layout_constraintTop_toBottomOf="@id/button2"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"/>
+        app:layout_constraintRight_toLeftOf="@+id/button5"/>
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="帧动画停止"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/button4"/>
+        app:layout_constraintLeft_toRightOf="@id/button4"
+        app:layout_constraintTop_toBottomOf="@id/button2"/>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/frame_animation"/>
+        android:background="@drawable/frame_animation"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

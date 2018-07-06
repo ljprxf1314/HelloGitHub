@@ -6,30 +6,52 @@ layout_constraintHorizontal_chainStyle:链的展示效果,有三个值:默认spr
 layout_constraintHorizontal_bias:水平偏移
 layout_constraintVertical_bias:垂直偏移
 
+layout_constraintWidth_min and layout_constraintHeight_min //设置最小尺寸
+layout_constraintWidth_max and layout_constraintHeight_max //设置最大尺寸
+layout_constraintWidth_percent and layout_constraintHeight_percent //设置相对于父类的百分比
+
+Circular positioning（圆形定位）
+如果实际宽度超过了约束的最大宽度，那么约束会失效（高同理），为了防止约束失效，增加了以下属性：
+app:layout_constrainedWidth=”true|false” //默认false   会导致渲染变慢，变慢时长可忽略不计。
+app:layout_constrainedHeight=”true|false” //默认false
+
+goneMargin（隐藏边距）
+当约束目标的可见性为View.GONE时，还可以通过以下属性设置不同的边距值：
+layout_goneMarginStart
+layout_goneMarginEnd
+layout_goneMarginLeft
+layout_goneMarginTop
+layout_goneMarginRight
+layout_goneMarginBottom
+
+Guideline 具有以下的三种定位方式：
+layout_constraintGuide_begin 距离父容器起始位置的距离（左侧或顶部）
+layout_constraintGuide_end 距离父容器结束位置的距离（右侧或底部）
+layout_constraintGuide_percent 距离父容器宽度或高度的百分比
+
+Barrier，直译为障碍、屏障。在约束布局中，可以使用属性constraint_referenced_ids属性
+来引用多个带约束的组件，从而将它们看作一个整体，Barrier 的介入可以完成很多其他布局不能完成的功能
+barrierDirection 指定方向，constraint_referenced_ids引用的控件 id（多个id以逗号隔开）。
+
+Group用于控制多个控件的可见性。
+若 android:visibility="gone" 那么 A，B 控件都会隐藏,
+constraint_referenced_ids引用的控件 id（多个id以逗号隔开）
+
 鸿洋博客:https://blog.csdn.net/lmj623565791/article/details/78011599?utm_source=tuicool&utm_medium=referral
 郭霖博客:https://blog.csdn.net/guolin_blog/article/details/53122387
+https://mp.weixin.qq.com/s/TKO2d4K0675I5aeTGIWD_A
 
-
-
-
-
-layout_constraintLeft_toLeftOf
-layout_constraintLeft_toRightOf
-layout_constraintRight_toLeftOf
-layout_constraintRight_toRightOf
-layout_constraintTop_toTopOf
-layout_constraintTop_toBottomOf
-layout_constraintBottom_toTopOf
-layout_constraintBottom_toBottomOf
 
 # 即文章的baseline对齐
 layout_constraintBaseline_toBaselineOf
+
 
 # 与left,right类似
 layout_constraintStart_toEndOf
 layout_constraintStart_toStartOf
 layout_constraintEnd_toStartOf
 layout_constraintEnd_toEndOf
+
 
 # margin不需要解释
 android:layout_marginStart
