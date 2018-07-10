@@ -37,6 +37,8 @@ public class AnimationMainActivity extends BaseActivity {
     Button mButton5;
     @BindView(R.id.imageView)
     ImageView mImageView;
+    @BindView(R.id.button6)
+    Button mButton6;
 
     private AnimationDrawable mAnimationDrawable;
 
@@ -47,12 +49,12 @@ public class AnimationMainActivity extends BaseActivity {
         ButterKnife.bind(this);
         mAnimationDrawable = (AnimationDrawable) mImageView.getBackground();
 
-        Animation animation = AnimationUtils.loadAnimation(this,R.anim.anim_item);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_item);
         mImageView.setAnimation(animation);
 
     }
 
-    @OnClick({R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.imageView})
+    @OnClick({R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.imageView,R.id.button6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button2:
@@ -60,13 +62,16 @@ public class AnimationMainActivity extends BaseActivity {
                 break;
             case R.id.button3:
                 startActivity(LayoutAnimationActivity.class);
-                overridePendingTransition(R.anim.animation_main_enter,R.anim.animation_main_exit);
+                overridePendingTransition(R.anim.animation_main_enter, R.anim.animation_main_exit);
                 break;
             case R.id.button4:
                 mAnimationDrawable.start();
                 break;
             case R.id.button5:
                 mAnimationDrawable.stop();
+                break;
+            case R.id.button6:
+                startActivity(AnimatorTwoActivity.class);
                 break;
             case R.id.imageView:
                 break;

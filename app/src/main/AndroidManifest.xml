@@ -32,6 +32,7 @@
         <activity android:name=".activity.animation.AnimationMainActivity"/>
         <activity android:name=".activity.animation.LayoutAnimationActivity"/>
         <activity android:name=".activity.animation.AnimatorActivity"/>
+        <activity android:name=".activity.animation.AnimatorTwoActivity"/>
 
         <service android:name=".activity.service.HelloService"/>
 
