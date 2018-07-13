@@ -1,6 +1,5 @@
 package com.ljp.hellogithub.activity.animation.view;
 
-import android.animation.PointFEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.Animation;
 
 import com.ljp.hellogithub.activity.animation.Point;
 import com.ljp.hellogithub.activity.animation.PointEvaluator;
