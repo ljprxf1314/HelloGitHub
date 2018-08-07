@@ -8,37 +8,53 @@
     android:orientation="vertical"
     tools:context="com.ljp.hellogithub.MainActivity">
 
-    <Button
-        android:id="@+id/btn_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="textView_spannable样式"/>
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_my_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="view的事件体系"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_service"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="MySercvice"/>
+            <Button
+                android:id="@+id/btn_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="textView_spannable样式"/>
 
-    <Button
-        android:id="@+id/btn_animation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="动画"/>
+            <Button
+                android:id="@+id/btn_my_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="view的事件体系"/>
 
-    <Button
-        android:id="@+id/btn_ui"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UI"/>
+            <Button
+                android:id="@+id/btn_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="MySercvice"/>
+
+            <Button
+                android:id="@+id/btn_animation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="动画"/>
+
+            <Button
+                android:id="@+id/btn_ui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UI"/>
+
+            <Button
+                android:id="@+id/btn_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="android消息机制"/>
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

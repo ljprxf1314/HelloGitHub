@@ -41,6 +41,9 @@
         <activity android:name=".ui.constraint.ConstraintLayoutActivity"/>
         <activity android:name=".ui.recycler.RecyclerViewActivity"/>
 
+        <!--android消息机制-->
+        <activity android:name=".activity.message_mechanism.MessageMechanismActivity"/>
+
     </application>
 
 </manifest>

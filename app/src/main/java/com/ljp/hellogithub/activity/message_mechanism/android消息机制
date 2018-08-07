@@ -1,0 +1,10 @@
+一、android消息机制:
+    1.android的消息机制主要是指Handler的运行机制,Handler运行需要底层的MessageQueue和Looper支撑。
+    2.Handler使用send将将Message发送出去,MessageQueue使用enqueueMessage将Message放入消息队列,
+      然后Looper就会处理队列中的消息
+    3.ThreadLocal:可用于不同线程中数据存储
+    4.MessageQueue:通过enqueueMessage入列一个消息和next返回并删除一个消息,内部消息存储使用的是单链表
+    5.Looper:通过prepare为当前线程创建一个Looper,接着通过loop来开始开启消息循环
+             looper还提供了prepareMainLooper方法提供了给主线程(即ActivityThread)创建使用
+             looper退出:quit直接退出,quitSafely设定一个标记退出
+
