@@ -47,6 +47,7 @@
         <!--android线程和线程池-->
         <activity android:name=".activity.threadpool.MyThreadMain"/>
         <activity android:name=".activity.threadpool.AsyncTaskActivity"/>
+        <service android:name=".activity.threadpool.LocalIntentService"/><!--注册IntentService服务-->
 
     </application>
 

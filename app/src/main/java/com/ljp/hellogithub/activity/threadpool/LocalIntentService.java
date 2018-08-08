@@ -15,7 +15,7 @@ public class LocalIntentService extends IntentService {
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-//        Log.e(TAG, "onStartCommand : flags:"+flags+ "--startId:"+  startId);
+        Log.e(TAG, "onStartCommand : flags:"+flags+ "--startId:"+  startId);
         return super.onStartCommand(intent, flags, startId);
     }
 
