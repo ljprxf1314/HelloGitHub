@@ -52,7 +52,15 @@
                 android:id="@+id/btn_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAllCaps="false"
                 android:text="android消息机制"/>
+
+            <Button
+                android:id="@+id/btn_threadpool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="android的线程和线程池"/>
         </LinearLayout>
 
     </ScrollView>

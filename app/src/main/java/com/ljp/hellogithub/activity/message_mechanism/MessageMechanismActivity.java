@@ -3,6 +3,7 @@ package com.ljp.hellogithub.activity.message_mechanism;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -42,15 +43,6 @@ public class MessageMechanismActivity extends BaseActivity {
                 super.run();
                 mBooleanThreadLocal.set(false);
                 Log.e("thread1","{thread1}mBooleanThreadLocal="+mBooleanThreadLocal.get());
-                @SuppressLint("HandlerLeak")
-                Handler hadler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                    }
-                };
-
-                hadler.sendEmptyMessage(1);
             }
         }.start();
 

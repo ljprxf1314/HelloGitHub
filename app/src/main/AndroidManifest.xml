@@ -44,6 +44,10 @@
         <!--android消息机制-->
         <activity android:name=".activity.message_mechanism.MessageMechanismActivity"/>
 
+        <!--android线程和线程池-->
+        <activity android:name=".activity.threadpool.MyThreadMain"/>
+        <activity android:name=".activity.threadpool.AsyncTaskActivity"/>
+
     </application>
 
 </manifest>
