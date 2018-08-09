@@ -2,7 +2,13 @@
 <manifest package="com.ljp.hellogithub"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name="App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,17 +24,17 @@
             </intent-filter>
         </activity>
 
-        <!--滑动冲突-外部拦截-->
+        <!-- 滑动冲突-外部拦截 -->
         <activity android:name=".activity.viewclicksystem.Demo1Activity"/>
-        <!--滑动冲突-内部拦截-->
+        <!-- 滑动冲突-内部拦截 -->
         <activity android:name=".activity.viewclicksystem.Demo2Activity"/>
         <activity android:name=".activity.textview.TextViewSpannableActivity"/>
         <activity android:name=".activity.viewclicksystem.MyViewActivity"/>
 
-        <!--service demo-->
+        <!-- service demo -->
         <activity android:name=".activity.service.ServiceDemoActivity"/>
 
-        <!--动画-->
+        <!-- 动画 -->
         <activity android:name=".activity.animation.AnimationMainActivity"/>
         <activity android:name=".activity.animation.LayoutAnimationActivity"/>
         <activity android:name=".activity.animation.AnimatorActivity"/>
@@ -36,19 +42,25 @@
 
         <service android:name=".activity.service.HelloService"/>
 
-        <!--====UI布局activity===-->
+        <!-- ====UI布局activity=== -->
         <activity android:name=".ui.UIActivity"/>
         <activity android:name=".ui.constraint.ConstraintLayoutActivity"/>
         <activity android:name=".ui.recycler.RecyclerViewActivity"/>
 
-        <!--android消息机制-->
+        <!-- android消息机制 -->
         <activity android:name=".activity.message_mechanism.MessageMechanismActivity"/>
 
-        <!--android线程和线程池-->
+        <!-- android线程和线程池 -->
         <activity android:name=".activity.threadpool.MyThreadMain"/>
         <activity android:name=".activity.threadpool.AsyncTaskActivity"/>
-        <service android:name=".activity.threadpool.LocalIntentService"/><!--注册IntentService服务-->
 
+        <service android:name=".activity.threadpool.LocalIntentService"/> <!-- 注册IntentService服务 -->
+        <activity android:name=".activity.threadpool.HandlerThreadActivity"/>
+        <activity
+            android:name=".activity.threadpool.ThreadPoolExecutorActivity"
+            android:label="@string/title_activity_thread_pool_executor"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -2,4 +2,6 @@
     <string name="app_name">HelloGitHub</string>
     <string name="title_activity_text_view">TextViewActivity</string>
     <string name="title_activity_my_view">MyViewActivity</string>
+    <string name="title_activity_handler_thread">HandlerThreadActivity</string>
+    <string name="title_activity_thread_pool_executor">ThreadPoolExecutorActivity</string>
 </resources>

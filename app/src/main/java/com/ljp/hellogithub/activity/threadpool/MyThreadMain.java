@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -30,7 +32,7 @@ public class MyThreadMain extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_asynctask, R.id.btn_intentservice, R.id.btn_threadpool})
+    @OnClick({R.id.btn_asynctask, R.id.btn_intentservice, R.id.btn_threadpool,R.id.btn_handlerthread})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_asynctask:
@@ -41,12 +43,16 @@ public class MyThreadMain extends BaseActivity {
                 startIntentService();
                 break;
             case R.id.btn_threadpool:
+                startActivity(ThreadPoolExecutorActivity.class);
+                break;
+            case R.id.btn_handlerthread:
+                startActivity(HandlerThreadActivity.class);
                 break;
         }
     }
 
-    private void startIntentService(){
-        Intent service = new Intent(this,LocalIntentService.class);
+    private void startIntentService() {
+        Intent service = new Intent(this, LocalIntentService.class);
         service.putExtra("task_action", "com.ryg.action.TASK1");
         startService(service);
         service.putExtra("task_action", "com.ryg.action.TASK2");

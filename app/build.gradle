@@ -23,6 +23,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:design:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
@@ -32,4 +33,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation files('libs/nineoldandroids.jar')
     implementation 'com.android.support:support-annotations:27.1.1'
+
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'de.greenrobot:greendao:2.1.0'
+//    compile 'com.facebook.stetho:stetho:1.3.1'
 }

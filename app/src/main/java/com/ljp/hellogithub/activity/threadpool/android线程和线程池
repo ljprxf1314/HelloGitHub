@@ -1,0 +1,15 @@
+1.AsyncTask<Params参数,Progress进度,Result结果>
+  内部实现使用Handler和Thread
+  主要前四个方法:
+  (1)onPreExecute:可以做准备工作,它运行在主线程中
+  (2)doInBackground(Params... params):运行在子线程中,可以执行耗时操作,可以通过publishProgress方法更新任务进度,
+     publishProgress会调用onProgressUpdate方法。另外需要返回计算结果给onPostExecute方法
+  (3)onProgressUpdate(Progress value):在主线程中执行,可以进行更新进度的操作
+  (4)onPostExecute(Result result):在主线程中执行,result就是doInBackground的返回值
+  (5)onCancelled():也是在主线程中执行,当异步任务取消时会调用这个方法,这时候onPostExecute就不会别调用
+2.HandlerThread:
+   继承自Thread,本质上也是线程,它是一种使用了Handler的Thread,在run方法中自动创建Looper,这样就可以在线程中使用Handler
+3.IntentService
+   继承自Service,内部封装了HandlerThread和Handler,在 IntentService 内有一个工作线程来处理耗时操作,
+   当任务执行完毕后它会自动停止
+   onHandlerIntent():方法用来接收界面传递的参数,区分具体的任务并执行这些任务
