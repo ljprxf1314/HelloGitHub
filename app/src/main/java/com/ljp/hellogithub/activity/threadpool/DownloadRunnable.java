@@ -61,7 +61,7 @@ public class DownloadRunnable implements Runnable {
         try {
             RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
             randomAccessFile.seek(mStart);
-            byte[] buffer = new byte[1024 * 500];
+            byte[] buffer = new byte[1024 * 100];
             int len;
             InputStream inStream = response.body().byteStream();
             while ((len = inStream.read(buffer, 0, buffer.length)) != -1) {

@@ -171,11 +171,12 @@ public class DownloadManager {
             } else {
                 endSize = (i + 1) * threadDownloadSize - 1;
             }
+
             entity.setDownload_url(url);
             entity.setStart_position(startSize);
             entity.setEnd_position(endSize);
             entity.setThread_id(i + 1);
-            sThreadPool.execute(new DownloadRunnable(startSize, endSize, url, callback));
+            sThreadPool.execute(new DownloadRunnable(startSize, endSize, url, callback, entity));
         }
     }
 

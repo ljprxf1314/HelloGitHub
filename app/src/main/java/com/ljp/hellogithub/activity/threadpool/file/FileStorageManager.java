@@ -39,7 +39,7 @@ public class FileStorageManager {
 
         String fileName = Md5Utills.generateCode(url);
 
-        File file = new File(parent,fileName);
+        File file = new File(parent,fileName+".apk");
         try {
             file.createNewFile();
         } catch (IOException e) {

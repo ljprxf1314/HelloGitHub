@@ -32,7 +32,8 @@ public class DownloadConfig {
         private int maxThreadSize;
         private int localProgressThreadSize;
 
-        public Builder setCoreThreadSize(int coreThreadSize) {
+        public Builder setCoreThreadSize(int coreThreadSize)
+        {
             this.coreThreadSize = coreThreadSize;
             return this;
         }

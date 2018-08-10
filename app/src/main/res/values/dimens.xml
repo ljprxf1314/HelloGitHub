@@ -1,3 +1,15 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!--字体大小,用的是dp-->
+    <dimen name="ts18">9dp</dimen>
+    <dimen name="ts20">10dp</dimen>
+    <dimen name="ts22">11dp</dimen>
+    <dimen name="ts24">12dp</dimen>
+    <dimen name="ts26">13dp</dimen>
+    <dimen name="ts28">14dp</dimen>
+    <dimen name="ts30">15dp</dimen>
+    <dimen name="ts32">16dp</dimen><!--title-->
+    <dimen name="ts34">17dp</dimen>
+    <dimen name="ts36">18dp</dimen>
 </resources>
