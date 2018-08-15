@@ -70,11 +70,32 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @OnClick({R.id.btn, R.id.btn1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn:
-                runThreadPool();
+                //                runThreadPool();
+
+                boolean haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                if (!haveInstallPermission) {
+                    DialogUtil.showCustomDialog(ThreadPoolExecutorActivity.this, "安装权限", "需要打开允许来自此来源，请去设置中开启此权限",
+                            "确定", "取消", new DialogUtil.MyCustomDialogListener2() {
+                                @Override
+                                public void ok() {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        //此方法需要API>=26才能使用
+                                        toInstallPermissionSettingIntent();
+                                    }
+                                }
+
+                                @Override
+                                public void no() {
+
+                                }
+                            });
+                    return;
+                }
                 break;
             case R.id.btn1:
                 DownloadManager.getInstance().download(downloadUrl,
@@ -82,7 +103,7 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                             @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void success(File file) {
-                                Log.e("success","走了一次");
+                                Log.e("success", "走了一次");
                                 if (count < 1) {
                                     count++;
                                     return;
@@ -137,7 +158,7 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
 
 
     private void installApk(File file) {
-//        File file1 = new File("file://" + file.getAbsoluteFile().toString());
+        //        File file1 = new File("file://" + file.getAbsoluteFile().toString());
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//增加读写权限
         //添加这一句表示对目标应用临时授权该Uri所代表的文件
@@ -153,8 +174,8 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void toInstallPermissionSettingIntent() {
-        Uri packageURI = Uri.parse("package:"+getPackageName());
-        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI);
+        Uri packageURI = Uri.parse("package:" + getPackageName());
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
         startActivityForResult(intent, 100);
     }
 

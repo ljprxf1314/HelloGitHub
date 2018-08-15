@@ -1,6 +1,8 @@
 package com.ljp.hellogithub;
 
 import android.app.Application;
+import android.content.Context;
+import android.os.Handler;
 
 import com.ljp.hellogithub.activity.threadpool.DownloadConfig;
 import com.ljp.hellogithub.activity.threadpool.DownloadManager;
@@ -19,9 +21,18 @@ import com.ljp.hellogithub.activity.threadpool.http.HttpManager;
 
 public class App extends Application {
 
+    public static Context context = null;
+    public static Handler handler = null;
+    public static Thread mainThread = null;
+    public static int mainThreadId = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
+        handler = new Handler();
+        mainThread = Thread.currentThread();
+        mainThreadId = android.os.Process.myTid();
 
         FileStorageManager.getInstance().init(this);
         DownloadHelper.getInstance().init(this);
