@@ -13,3 +13,26 @@
    继承自Service,内部封装了HandlerThread和Handler,在 IntentService 内有一个工作线程来处理耗时操作,
    当任务执行完毕后它会自动停止
    onHandlerIntent():方法用来接收界面传递的参数,区分具体的任务并执行这些任务
+
+
+
+下载目录位置:
+getCacheDir()方法用于获取/data/data//cache目录
+getFilesDir()方法用于获取/data/data//files目录
+通过Context.getExternalFilesDir()方法可以获取到 SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
+通过Context.getExternalCacheDir()方法可以获取到 SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
+
+Environment.getDataDirectory() = /data
+Environment.getDownloadCacheDirectory() = /cache
+Environment.getExternalStorageDirectory() = /mnt/sdcard
+Environment.getExternalStoragePublicDirectory(“test”) = /mnt/sdcard/test
+Environment.getRootDirectory() = /system
+getPackageCodePath() = /data/app/com.my.app-1.apk
+getPackageResourcePath() = /data/app/com.my.app-1.apk
+getCacheDir() = /data/data/com.my.app/cache
+getDatabasePath(“test”) = /data/data/com.my.app/databases/test
+getDir(“test”, Context.MODE_PRIVATE) = /data/data/com.my.app/app_test
+getExternalCacheDir() = /mnt/sdcard/Android/data/com.my.app/cache
+getExternalFilesDir(“test”) = /mnt/sdcard/Android/data/com.my.app/files/test
+getExternalFilesDir(null) = /mnt/sdcard/Android/data/com.my.app/files
+getFilesDir() = /data/data/com.my.app/files

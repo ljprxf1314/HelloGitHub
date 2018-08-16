@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.ljp.hellogithub.net.callback.IError;
 import com.ljp.hellogithub.net.callback.IFailure;
+import com.ljp.hellogithub.net.callback.IProgress;
 import com.ljp.hellogithub.net.callback.IRequest;
 import com.ljp.hellogithub.net.callback.ISuccess;
 
@@ -40,6 +41,7 @@ public class RestClientBuilder<T> {
     private File mFile = null;
     private Context mContext = null;
     private Class<T> mClass;
+    private IProgress mProgress;
 
     public RestClientBuilder() {
     }
@@ -127,12 +129,17 @@ public class RestClientBuilder<T> {
         return this;
     }
 
+    public final RestClientBuilder progress(IProgress mProgress){
+        this.mProgress = mProgress;
+        return this;
+    }
+
 
     @SuppressWarnings("unchecked")
     public final RestClient build(){
         return new RestClient(mParams,mUrl, mIRequest, mDownloadDir,
                 mExtension, mName, mISuccess, mIFailure, mIError,
-                mBody, mClass,isLoading,mDialog,mFile, mContext);
+                mBody, mClass,isLoading,mDialog,mFile, mContext,mProgress);
     }
 
 }

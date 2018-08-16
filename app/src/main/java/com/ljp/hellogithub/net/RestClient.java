@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.ljp.hellogithub.net.callback.IError;
 import com.ljp.hellogithub.net.callback.IFailure;
+import com.ljp.hellogithub.net.callback.IProgress;
 import com.ljp.hellogithub.net.callback.IRequest;
 import com.ljp.hellogithub.net.callback.ISuccess;
 import com.ljp.hellogithub.net.callback.RequestCallbacks;
@@ -44,12 +45,13 @@ public final class RestClient<T> {
     private final File file;
     private final Context context;
     private final Class<T> mClass;//解析json时用到的泛型
+    private final IProgress mProgress;
 
     ProgressUtils pu;
 
     public RestClient(WeakHashMap<String, Object> params, String url, IRequest request, String downloadDir,
                       String extension, String name, ISuccess success, IFailure failure, IError error,
-                      RequestBody body, Class<T> mClass, boolean isLoading, String dialog, File file, Context context) {
+                      RequestBody body, Class<T> mClass, boolean isLoading, String dialog, File file, Context context,IProgress mProgress) {
         this.params = params;
         this.url = url;
         this.request = request;
@@ -65,6 +67,7 @@ public final class RestClient<T> {
         this.dialog = dialog;
         this.context = context;
         this.mClass = mClass;
+        this.mProgress = mProgress;
         pu = new ProgressUtils();//初始化加载样式
     }
 
@@ -164,7 +167,7 @@ public final class RestClient<T> {
 
     public final void download() {
         new DownloadHandler(url, params,request, downloadDir, extension, name,
-                success, failure, error,context)
+                success, failure, error,context,mProgress)
                 .handleDownload();
     }
 
