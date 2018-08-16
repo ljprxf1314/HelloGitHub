@@ -66,7 +66,8 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
     private static final String PATH_CHALLENGE_VIDEO = Environment.getExternalStorageDirectory() + "/DownloadFile";
     private String mDownloadPath; //下载到本地的路径
 
-    @Override    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_pool_executor);
         ButterKnife.bind(this);
@@ -178,13 +179,41 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                 .error(new IError() {
                     @Override
                     public void onError(int code, String msg) {
-                        Log.e("onError",msg);
+                        Log.e("onError", msg);
                     }
                 })
                 .success(new ISuccess<File>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
-                    public void onSuccess(File file) {
-                        installApk(file);
+                    public void onSuccess(final File file) {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                boolean haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                                if (!haveInstallPermission) {
+                                    DialogUtil.showCustomDialog(ThreadPoolExecutorActivity.this, "安装权限", "需要打开允许来自此来源，请去设置中开启此权限",
+                                            "确定", "取消", new DialogUtil.MyCustomDialogListener2() {
+                                                @Override
+                                                public void ok() {
+                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                        //此方法需要API>=26才能使用
+                                                        toInstallPermissionSettingIntent();
+                                                        mFile = file;
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void no() {
+
+                                                }
+                                            });
+                                    return;
+                                }else{
+                                    installApk(file);
+                                }
+                            }
+                        });
                     }
                 })
                 .progress(new IProgress() {
@@ -302,15 +331,15 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                     android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
                 if (downloadId == intent.getLongExtra(
                         android.app.DownloadManager.EXTRA_DOWNLOAD_ID, -1)) {
-                        File file = new File(mDownloadPath);
-                        Intent i = new Intent();
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //添加这一句表示对目标应用临时授权该Uri所代表的文件
-                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        i.setAction(Intent.ACTION_VIEW);
-                        i.setDataAndType(FileUtils.getUriForFile(context, file),
-                                "application/vnd.android.package-archive");
-                        context.startActivity(i);
+                    File file = new File(mDownloadPath);
+                    Intent i = new Intent();
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //添加这一句表示对目标应用临时授权该Uri所代表的文件
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    i.setAction(Intent.ACTION_VIEW);
+                    i.setDataAndType(FileUtils.getUriForFile(context, file),
+                            "application/vnd.android.package-archive");
+                    context.startActivity(i);
                     //Toast.makeText(context, "下载完毕!", Toast.LENGTH_SHORT).show();
                 }
             }
