@@ -14,16 +14,12 @@ import android.widget.Toast;
  * </pre>
  */
 
-public class MyAsyncTask extends AsyncTask<Void,Integer,Boolean> {//<Params(参数), Progress(进度), Result(结果)>
+public class MyAsyncTask extends AsyncTask<ProgressBar,Integer,Boolean> {//<Params(参数), Progress(进度), Result(结果)>
 
     private final String TAG = "MyAsyncTask";
 
     ProgressBar pb;
     int progress  = 0;
-
-    public MyAsyncTask(ProgressBar pb) {
-        this.pb = pb;
-    }
 
     @Override
     protected void onPreExecute() {
@@ -33,10 +29,11 @@ public class MyAsyncTask extends AsyncTask<Void,Integer,Boolean> {//<Params(参�
     }
 
     @Override
-    protected Boolean doInBackground(Void... v) {
+    protected Boolean doInBackground(ProgressBar... progressBars) {
         //在线程池中执行此方法用于执行耗时任务
         //此方法可以通过publicProgress方法来更新任务的进度,publicPressage会调用onPressageUpdate方法
         //此方法需要返回计算结果给onPostExecute
+        pb = progressBars[0];
         while(true){
             publishProgress(progress);
 

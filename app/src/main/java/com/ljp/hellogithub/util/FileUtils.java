@@ -107,7 +107,7 @@ public class FileUtils {
         }
         Uri uri;
         if (Build.VERSION.SDK_INT >= 24) {
-            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.ljp.hellogithub.provider", file);
+            uri = FileProvider.getUriForFile(context.getApplicationContext(), context.getPackageName()+".provider", file);
         } else {
             uri = Uri.fromFile(file);
         }
@@ -155,4 +155,5 @@ public class FileUtils {
         }
         return true;
     }
+
 }

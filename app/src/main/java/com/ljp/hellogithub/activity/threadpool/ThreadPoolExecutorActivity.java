@@ -1,8 +1,10 @@
 package com.ljp.hellogithub.activity.threadpool;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -104,16 +106,14 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
     @OnClick({R.id.btn, R.id.btn1, R.id.btn2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn:
-                //                runThreadPool();
-
+            case R.id.btn://系统下载
                 String name = downloadUrl;
                 if (FileUtils.createOrExistsDir(PATH_CHALLENGE_VIDEO)) {
                     int i = name.lastIndexOf('/');//一定是找最后一个'/'出现的位置
                     if (i != -1) {
                         name = name.substring(i);
                         Log.e("DownloadHandler", name);
-                        mDownloadPath = PATH_CHALLENGE_VIDEO;// + name;
+                        mDownloadPath = PATH_CHALLENGE_VIDEO + name;
                     }
                 }
 
@@ -140,10 +140,10 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                         android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE);
                 registerReceiver(receiver, filter);
                 break;
-            case R.id.btn1:
+            case R.id.btn1://多线程下载
                 threadPoolExecuteDownload();
                 break;
-            case R.id.btn2:
+            case R.id.btn2://单线程下载
                 if (KbPermissionUtils.needRequestPermission()) { //判断是否需要动态申请权限
                     KbPermission.with(this)
                             .requestCode(100)
@@ -183,8 +183,40 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                 })
                 .success(new ISuccess<File>() {
                     @Override
-                    public void onSuccess(File file) {
-                        installApk(file);
+                    public void onSuccess(final File file) {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                boolean haveInstallPermission;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    //先获取是否有安装未知来源应用的权限
+                                    haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                                    if (!haveInstallPermission) {//没有权限
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ThreadPoolExecutorActivity.this);
+                                        builder.setTitle("安装应用需要打开未知来源权限，请去设置中开启权限");
+                                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                    startInstallPermissionSettingActivity();
+                                                }
+                                            }
+                                        });
+                                        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                        builder.create().show();
+                                        return;
+                                    }
+                                }
+                                installApk(file);
+                            }
+                        });
+
                     }
                 })
                 .progress(new IProgress() {
@@ -201,7 +233,8 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
      * okhttp3.0多线程下载
      */
     private void threadPoolExecuteDownload() {
-        DownloadManager.getInstance().download(downloadUrl,
+        DownloadManager.getInstance()
+                .download(downloadUrl,
                 new DownloadCallback() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -212,35 +245,33 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                             return;
                         }
                         mFile = file;
-                        //先判断是否有安装未知来源应用的权限
-                                /*boolean haveInstallPermission = getPackageManager().canRequestPackageInstalls();
-                                if(!haveInstallPermission){
-                                    DialogUtil.showCustomDialog(ThreadPoolExecutorActivity.this, "安装权限", "需要打开允许来自此来源，请去设置中开启此权限",
-                                            "确定", "取消", new DialogUtil.MyCustomDialogListener2() {
-                                                @Override
-                                                public void ok() {
-                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                                        //此方法需要API>=26才能使用
-                                                        toInstallPermissionSettingIntent();
-                                                    }
-                                                }
 
-                                                @Override
-                                                public void no() {
+                        boolean haveInstallPermission;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            //先获取是否有安装未知来源应用的权限
+                            haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                            if (!haveInstallPermission) {//没有权限
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ThreadPoolExecutorActivity.this);
+                                builder.setTitle("安装应用需要打开未知来源权限，请去设置中开启权限");
+                                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            startInstallPermissionSettingActivity();
+                                        }
+                                    }
+                                });
+                                builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                                }
-                                            });
-                                    return;
-                                }*/
+                                    }
+                                });
+                                builder.create().show();
+                                return;
+                            }
+                        }
                         installApk(file);
-
-                        //                        final Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                        //                        runOnUiThread(new Runnable() {
-                        //                            @Override
-                        //                            public void run() {
-                        //                                mImageView.setImageBitmap(bitmap);
-                        //                            }
-                        //                        });
                         Logger.debug("nate", "success " + file.getAbsoluteFile());
                     }
 
@@ -255,38 +286,6 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                         mProgress.setProgress(progress);
                     }
                 });
-    }
-
-
-    private void installApk(File file) {
-        //        File file1 = new File("file://" + file.getAbsoluteFile().toString());
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//增加读写权限
-        //添加这一句表示对目标应用临时授权该Uri所代表的文件
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(FileUtils.getUriForFile(this, file)
-                , "application/vnd.android.package-archive");
-        this.startActivity(intent);
-    }
-
-    /**
-     * 开启安装未知来源权限
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void toInstallPermissionSettingIntent() {
-        Uri packageURI = Uri.parse("package:" + getPackageName());
-        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
-        startActivityForResult(intent, 100);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == 100) {
-            installApk(mFile);
-        }
     }
 
     /**
@@ -305,7 +304,6 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                         File file = new File(mDownloadPath);
                         Intent i = new Intent();
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //添加这一句表示对目标应用临时授权该Uri所代表的文件
                         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         i.setAction(Intent.ACTION_VIEW);
                         i.setDataAndType(FileUtils.getUriForFile(context, file),
@@ -316,6 +314,33 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
             }
             context.unregisterReceiver(receiver);
         }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startInstallPermissionSettingActivity() {
+        Uri packageURI = Uri.parse("package:" + getPackageName());
+        //注意这个是8.0新API
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+        startActivityForResult(intent, 10086);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 10086 &&  resultCode == RESULT_OK) {
+            installApk(mFile);
+        }
+    }
+
+    public void installApk(File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(FileUtils.getUriForFile(this, file)
+                , "application/vnd.android.package-archive");
+        startActivity(intent);
     }
 
     /**

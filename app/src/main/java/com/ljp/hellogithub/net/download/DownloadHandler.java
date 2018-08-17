@@ -106,8 +106,8 @@ public final class DownloadHandler {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull final Response<ResponseBody> response) {
-                        /*if (response.isSuccessful()) {
-                            final ResponseBody responseBody = response.body();
+                        if (response.isSuccessful()) {
+                            /*final ResponseBody responseBody = response.body();
                             Log.e("updateVersion","contentLength:"+responseBody.contentLength());
                             final SaveFileTask task = new SaveFileTask(REQUEST, SUCCESS,mContext);
                             //使用asynctask多线程方式下载
@@ -119,24 +119,24 @@ public final class DownloadHandler {
                                 if (REQUEST != null) {
                                     REQUEST.onRequestEnd();
                                 }
-                            }
+                            }*/
+
+                            //下载文件放在子线程
+                            mThread = new Thread() {
+                                @Override
+                                public void run() {
+                                    super.run();
+                                    //保存到本地
+                                    writeFile2Disk(response, mFile);
+                                }
+                            };
+                            mThread.start();
                         } else {
                             if (ERROR != null) {
                                 ERROR.onError(response.code(), response.message());
                             }
-                        }*/
+                        }
 
-
-                        //下载文件放在子线程
-                        mThread = new Thread() {
-                            @Override
-                            public void run() {
-                                super.run();
-                                //保存到本地
-                                writeFile2Disk(response, mFile);
-                            }
-                        };
-                        mThread.start();
                     }
 
                     @Override
