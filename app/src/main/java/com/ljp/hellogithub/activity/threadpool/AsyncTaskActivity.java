@@ -47,6 +47,13 @@ public class AsyncTaskActivity extends BaseActivity {
     ProgressBar mProgressBar7;
 
     MyAsyncTask myAsyncTask;
+    MyAsyncTask myAsyncTask2;
+    MyAsyncTask myAsyncTask3;
+    MyAsyncTask myAsyncTask4;
+    MyAsyncTask myAsyncTask5;
+    MyAsyncTask myAsyncTask6;
+    MyAsyncTask myAsyncTask7;
+
 
     private Executor singleExecutor;
 
@@ -56,8 +63,16 @@ public class AsyncTaskActivity extends BaseActivity {
         setContentView(R.layout.activity_asynctask);
         ButterKnife.bind(this);
 
-        singleExecutor = Executors.newSingleThreadExecutor();
+//        singleExecutor = Executors.newSingleThreadExecutor();
+        singleExecutor = Executors.newFixedThreadPool(5);
+
         myAsyncTask = new MyAsyncTask();
+        myAsyncTask2 = new MyAsyncTask();
+        myAsyncTask3 = new MyAsyncTask();
+        myAsyncTask4 = new MyAsyncTask();
+        myAsyncTask5 = new MyAsyncTask();
+        myAsyncTask6 = new MyAsyncTask();
+        myAsyncTask7 = new MyAsyncTask();
     }
 
 
@@ -66,8 +81,12 @@ public class AsyncTaskActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_start:
                 myAsyncTask.executeOnExecutor(singleExecutor,mProgressBar);
-                myAsyncTask.executeOnExecutor(singleExecutor,mProgressBar2);
-                myAsyncTask.executeOnExecutor(singleExecutor,mProgressBar3);
+                myAsyncTask2.executeOnExecutor(singleExecutor,mProgressBar2);
+                myAsyncTask3.executeOnExecutor(singleExecutor,mProgressBar3);
+                myAsyncTask4.executeOnExecutor(singleExecutor,mProgressBar4);
+                myAsyncTask5.executeOnExecutor(singleExecutor,mProgressBar5);
+                myAsyncTask6.executeOnExecutor(singleExecutor,mProgressBar6);
+                myAsyncTask7.executeOnExecutor(singleExecutor,mProgressBar7);
                 break;
             case R.id.btn_end:
                 myAsyncTask.cancel(true);
