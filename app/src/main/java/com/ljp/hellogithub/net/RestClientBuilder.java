@@ -46,6 +46,10 @@ public class RestClientBuilder<T> {
     public RestClientBuilder() {
     }
 
+    public RestClientBuilder(Class<T> mClass) {
+        this.mClass = mClass;
+    }
+
     public final RestClientBuilder url(String url){
         this.mUrl = url;
         return this;
@@ -124,10 +128,10 @@ public class RestClientBuilder<T> {
         return this;
     }
 
-    public final RestClientBuilder mClass(Class<T> mClass){
-        this.mClass = mClass;
-        return this;
-    }
+//    public final RestClientBuilder mClass(Class<T> mClass){
+//        this.mClass = mClass;
+//        return this;
+//    }
 
     public final RestClientBuilder progress(IProgress mProgress){
         this.mProgress = mProgress;
@@ -135,9 +139,8 @@ public class RestClientBuilder<T> {
     }
 
 
-    @SuppressWarnings("unchecked")
     public final RestClient build(){
-        return new RestClient(mParams,mUrl, mIRequest, mDownloadDir,
+        return new RestClient<>(mParams,mUrl, mIRequest, mDownloadDir,
                 mExtension, mName, mISuccess, mIFailure, mIError,
                 mBody, mClass,isLoading,mDialog,mFile, mContext,mProgress);
     }

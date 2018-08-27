@@ -71,10 +71,27 @@ public final class RestClient<T> {
         pu = new ProgressUtils();//初始化加载样式
     }
 
+    /**
+     * 不带泛型参数,构建时默认返回字符串
+     * @return
+     */
     public static RestClientBuilder builder() {
         return new RestClientBuilder();
     }
 
+    /**
+     * 构建时传入泛型,解析时返回解析后的对象参数
+     * @param t
+     * @return
+     */
+    public static <T> RestClientBuilder builder(Class<T> t) {
+        return new RestClientBuilder<>(t);
+    }
+
+    /**
+     * 请求方式
+     * @param httpMethod
+     */
     private void request(HttpMethod httpMethod){
         final RestService service = RestCreate.getRestService();
         Call<String> call = null;
@@ -127,7 +144,8 @@ public final class RestClient<T> {
     }
 
     private Callback<String> getRequestCallback(){
-        return new RequestCallbacks(context,request,success,failure,error,mClass,isLoading,pu);
+        RequestCallbacks  callbacks = new RequestCallbacks(context,request,success,failure,error,mClass,isLoading,pu);
+        return callbacks;
     }
 
 

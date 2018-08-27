@@ -45,7 +45,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressWarnings("unchecked")
 public class ThreadPoolExecutorActivity extends BaseActivity {
 
     @BindView(R.id.progress)
@@ -172,9 +171,8 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
      * 使用retrofit2.0单线程下载
      */
     private void threadDownload() {
-        RestClient.builder()
+        RestClient.builder(File.class)
                 .url(downloadUrl)
-                .mClass(File.class)
                 .error(new IError() {
                     @Override
                     public void onError(int code, String msg) {
