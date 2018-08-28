@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.ljp.hellogithub.activity.animation.AnimationMainActivity;
 import com.ljp.hellogithub.activity.message_mechanism.MessageMechanismActivity;
+import com.ljp.hellogithub.activity.rxjava.RxJavaActivity;
 import com.ljp.hellogithub.activity.service.ServiceDemoActivity;
 import com.ljp.hellogithub.activity.textview.TextViewSpannableActivity;
 import com.ljp.hellogithub.activity.threadpool.MyThreadMain;
@@ -34,7 +35,8 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service, R.id.btn_animation, R.id.btn_ui, R.id.btn_message,R.id.btn_threadpool})
+    @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service, R.id.btn_animation, R.id.btn_ui, R.id.btn_message,R.id.btn_threadpool,
+            R.id.btn_rxjava})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_activity:
@@ -57,6 +59,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_threadpool:
                 startActivity(MyThreadMain.class);
+                break;
+            case R.id.btn_rxjava:
+                startActivity(RxJavaActivity.class);
                 break;
         }
     }

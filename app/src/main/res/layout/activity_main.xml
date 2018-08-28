@@ -11,30 +11,31 @@
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="textView_spannable样式"/>
+                android:text="textView_spannable样式"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/btn_my_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="view的事件体系"/>
+                android:text="view的事件体系"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/btn_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="MySercvice"/>
+                android:text="MySercvice"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/btn_animation"
@@ -52,15 +53,22 @@
                 android:id="@+id/btn_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="android消息机制"/>
+                android:text="android消息机制"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/btn_threadpool"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="android的线程和线程池"/>
+                android:text="android的线程和线程池"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btn_rxjava"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RxJava"
+                android:textAllCaps="false"/>
         </LinearLayout>
 
     </ScrollView>

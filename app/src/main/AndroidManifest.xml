@@ -83,6 +83,9 @@
         <service android:name=".activity.threadpool.LocalIntentService"/> <!-- 注册IntentService服务 -->
         <activity android:name=".activity.threadpool.HandlerThreadActivity"/>
         <activity android:name=".activity.threadpool.ThreadPoolExecutorActivity"/>
+
+        <!--rxjava-->
+        <activity android:name=".activity.rxjava.RxJavaActivity"/>
     </application>
 
 </manifest>
