@@ -67,7 +67,8 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
     private static final String PATH_CHALLENGE_VIDEO = Environment.getExternalStorageDirectory() + "/DownloadFile";
     private String mDownloadPath; //下载到本地的路径
 
-    @Override    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_pool_executor);
         ButterKnife.bind(this);
@@ -176,7 +177,7 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                 .error(new IError() {
                     @Override
                     public void onError(int code, String msg) {
-                        Log.e("onError",msg);
+                        Log.e("onError", msg);
                     }
                 })
                 .success(new ISuccess<File>() {
@@ -233,57 +234,57 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
     private void threadPoolExecuteDownload() {
         DownloadManager.getInstance()
                 .download(downloadUrl,
-                new DownloadCallback() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void success(File file) {
-                        Log.e("success", "走了一次");
-                        if (count < 1) {
-                            count++;
-                            return;
-                        }
-                        mFile = file;
+                        new DownloadCallback() {
+                            @RequiresApi(api = Build.VERSION_CODES.O)
+                            @Override
+                            public void success(File file) {
+                                Log.e("success", "走了一次");
+                                if (count < 1) {
+                                    count++;
+                                    return;
+                                }
+                                mFile = file;
 
-                        boolean haveInstallPermission;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            //先获取是否有安装未知来源应用的权限
-                            haveInstallPermission = getPackageManager().canRequestPackageInstalls();
-                            if (!haveInstallPermission) {//没有权限
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ThreadPoolExecutorActivity.this);
-                                builder.setTitle("安装应用需要打开未知来源权限，请去设置中开启权限");
-                                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                            startInstallPermissionSettingActivity();
-                                        }
-                                    }
-                                });
-                                builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                boolean haveInstallPermission;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    //先获取是否有安装未知来源应用的权限
+                                    haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                                    if (!haveInstallPermission) {//没有权限
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ThreadPoolExecutorActivity.this);
+                                        builder.setTitle("安装应用需要打开未知来源权限，请去设置中开启权限");
+                                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                    startInstallPermissionSettingActivity();
+                                                }
+                                            }
+                                        });
+                                        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
 
+                                            }
+                                        });
+                                        builder.create().show();
+                                        return;
                                     }
-                                });
-                                builder.create().show();
-                                return;
+                                }
+                                installApk(file);
+                                Logger.debug("nate", "success " + file.getAbsoluteFile());
                             }
-                        }
-                        installApk(file);
-                        Logger.debug("nate", "success " + file.getAbsoluteFile());
-                    }
 
-                    @Override
-                    public void fail(int errorCode, String errorMessage) {
-                        Logger.debug("nate", "fail " + errorCode + "  " + errorMessage);
-                    }
+                            @Override
+                            public void fail(int errorCode, String errorMessage) {
+                                Logger.debug("nate", "fail " + errorCode + "  " + errorMessage);
+                            }
 
-                    @Override
-                    public void progress(int progress) {
-                        Logger.debug("nate", "progress    " + progress);
-                        mProgress.setProgress(progress);
-                    }
-                });
+                            @Override
+                            public void progress(int progress) {
+                                Logger.debug("nate", "progress    " + progress);
+                                mProgress.setProgress(progress);
+                            }
+                        });
     }
 
     /**
@@ -299,14 +300,14 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                     android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
                 if (downloadId == intent.getLongExtra(
                         android.app.DownloadManager.EXTRA_DOWNLOAD_ID, -1)) {
-                        File file = new File(mDownloadPath);
-                        Intent i = new Intent();
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        i.setAction(Intent.ACTION_VIEW);
-                        i.setDataAndType(FileUtils.getUriForFile(context, file),
-                                "application/vnd.android.package-archive");
-                        context.startActivity(i);
+                    File file = new File(mDownloadPath);
+                    Intent i = new Intent();
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    i.setAction(Intent.ACTION_VIEW);
+                    i.setDataAndType(FileUtils.getUriForFile(context, file),
+                            "application/vnd.android.package-archive");
+                    context.startActivity(i);
                     //Toast.makeText(context, "下载完毕!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -327,7 +328,7 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 10086 &&  resultCode == RESULT_OK) {
+        if (requestCode == 10086 && resultCode == RESULT_OK) {
             installApk(mFile);
         }
     }
