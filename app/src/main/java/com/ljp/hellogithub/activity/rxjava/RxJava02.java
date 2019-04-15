@@ -5,10 +5,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ljp.hellogithub.activity.rxjava.http.Api;
-import com.ljp.hellogithub.activity.rxjava.http.LoginRequest;
+import com.ljp.hellogithub.activity.rxjava.request.LoginRequest;
 import com.ljp.hellogithub.activity.rxjava.http.RetrofitClient;
-import com.ljp.hellogithub.net.RestCreate;
-import com.ljp.hellogithub.net.RestService;
 import com.ljp.hellogithub.util.MD5Util;
 
 import java.util.WeakHashMap;
@@ -77,7 +75,7 @@ public class RxJava02 {
         params.put("pwd",MD5Util.md5("123456"));
 
         Api api = RetrofitClient.create().create(Api.class);
-        api.login("/mobile/work/loginControl/login.action",params)
+        api.post("/mobile/work/loginControl/login.action",params)
                 .subscribeOn(Schedulers.io())               //在IO线程进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求结果
                 .subscribe(new Observer<String>() {

@@ -1,4 +1,4 @@
-package com.ljp.hellogithub.activity.rxjava.http;
+package com.ljp.hellogithub.activity.rxjava.request;
 
 /**
  * <pre>

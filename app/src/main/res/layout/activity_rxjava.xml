@@ -18,6 +18,33 @@
         android:text="RxJava02"
         android:textAllCaps="false"/>
 
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RxJava03Map"
+        android:textAllCaps="false"/>
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RxJava04Zip"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RxJava05"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RxJava06"
+        android:textAllCaps="false"/>
+
     <TextView
         android:id="@+id/tv_rx_operators"
         android:layout_width="match_parent"

@@ -13,7 +13,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST
-    Observable<String> login(@Url String url,  @FieldMap WeakHashMap<String, Object> params);
+    Observable<String> post(@Url String url,  @FieldMap WeakHashMap<String, Object> params);
 
 //    @FormUrlEncoded
 //    @POST
