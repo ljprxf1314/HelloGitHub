@@ -9,3 +9,7 @@
   局部刷新，notifyItemChanged(int, Object)
 
 3.SwipeRefreshLayout是系统recyclerview刷新控件
+
+
+学习资料:
+ItemDecoration基本原理理解和熟练使用:https://mp.weixin.qq.com/s/XUB1DrCG9-lZRXMMgIdrNw

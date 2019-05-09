@@ -1,4 +1,4 @@
-package com.ljp.hellogithub.ui.recycler;
+package com.ljp.hellogithub.ui.recycler.tworecyclerlist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

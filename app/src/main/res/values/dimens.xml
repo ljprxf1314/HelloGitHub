@@ -12,4 +12,7 @@
     <dimen name="ts32">16dp</dimen><!--title-->
     <dimen name="ts34">17dp</dimen>
     <dimen name="ts36">18dp</dimen>
+
+    <dimen name="item_margin_left">60dp</dimen>
+    <dimen name="item_node_radius">10dp</dimen>
 </resources>

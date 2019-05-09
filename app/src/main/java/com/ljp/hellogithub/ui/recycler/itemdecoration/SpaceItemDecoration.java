@@ -1,4 +1,4 @@
-package com.ljp.hellogithub.ui.recycler;
+package com.ljp.hellogithub.ui.recycler.itemdecoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -27,6 +28,8 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
     private Paint dividerPaint;
 
     private Context context;
+
+    private String TAG = "SpaceItemDecoration";
 
     public SpaceItemDecoration(Context context, int dpValue) {
         this.context = context;
@@ -56,8 +59,10 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
         for (int i = 0; i < childCount - 1; i++) {
             View view = parent.getChildAt(i);
-            float top = view.getBottom();
-            float bottom = view.getBottom() + dividerHeight;
+            float top = view.getTop();
+            float bottom = view.getTop() + dividerHeight;
+            Log.e(TAG,"view:left:"+view.getLeft()+"--top:"+view.getTop()+"--right:"+view.getRight()+"--bottom:"+view.getBottom());
+            Log.e(TAG,"divider:left:"+left+"--top:"+top+"--right:"+right+"--bottom:"+bottom);
             c.drawRect(left, top, right, bottom, dividerPaint);
         }
 

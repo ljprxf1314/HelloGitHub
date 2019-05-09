@@ -1,4 +1,4 @@
-package com.ljp.hellogithub.ui.recycler;
+package com.ljp.hellogithub.ui.recycler.tworecyclerlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
+import com.ljp.hellogithub.ui.recycler.itemdecoration.SpaceItemDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +53,7 @@ public class RecyclerViewActivity extends BaseActivity {
         //        decoration.setDrawable(getResources().getDrawable(R.color.black));
 
         SpaceItemDecoration decoration = new SpaceItemDecoration(this, 10);
-        //        decoration.setDrawable(R.color.colorPrimary);
+//        decoration.setDrawable(R.color.colorPrimary);
 
         mRv.addItemDecoration(decoration);
         mRv.setAdapter(adapterOne);

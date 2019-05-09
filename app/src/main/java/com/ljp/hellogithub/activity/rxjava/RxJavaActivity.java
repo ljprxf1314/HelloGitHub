@@ -36,6 +36,8 @@ public class RxJavaActivity extends BaseActivity {
     RxJava03Map mRxJava03 = new RxJava03Map();
     RxJava04Zip mRxJava04 = new RxJava04Zip();
     RxJava05 mRxJava05 = new RxJava05();
+    RxJava06 mRxJava06 = new RxJava06();
+    RxJava07 mRxJava07 = new RxJava07();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class RxJavaActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn1, R.id.btn2,R.id.btn3,R.id.btn4,R.id.btn5})
+    @OnClick({R.id.btn1, R.id.btn2,R.id.btn3,R.id.btn4,R.id.btn5,R.id.btn6,R.id.btn7})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn1:
@@ -62,6 +64,12 @@ public class RxJavaActivity extends BaseActivity {
                 break;
             case R.id.btn5:
                 mRxJava05.zip();
+                break;
+            case R.id.btn6:
+                mRxJava06.demo3();
+                break;
+            case R.id.btn7:
+                mRxJava07.demo1();
                 break;
         }
     }
