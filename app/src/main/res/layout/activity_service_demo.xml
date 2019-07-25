@@ -16,4 +16,28 @@
         android:layout_height="wrap_content"
         android:text="停止服务"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_bind"
+        android:text="绑定服务"/>
+
+    <Button
+        android:id="@+id/btn_unbind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="解绑服务"/>
+
+    <Button
+        android:id="@+id/btn_start_musice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="播放音乐"/>
+
+    <Button
+        android:id="@+id/btn_stop_musice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止音乐"/>
+
 </LinearLayout>
