@@ -135,7 +135,7 @@ public class HorizontalScrollViewExDemo extends ViewGroup {
                 }
                 break;
             }
-            case MotionEvent.ACTION_MOVE: {//滑动
+            case MotionEvent.ACTION_MOVE: { //滑动
                 int deltaX = x - mLastXIntercept;
                 int deltaY = y - mLastYIntercept;
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {

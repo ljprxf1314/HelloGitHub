@@ -51,7 +51,7 @@
     TextView是不可点击的。另外，setOnClickListener会自动将View的clickable设为true，
     setOnLongClickListener则自动会将View的LONG_CLICKABLE设置为true。
 
-  5.传递过程遵循如下顺序:activity-->window-->view
+  5.传递过程遵循如下顺序:activity-->window(PhoneWindow)-->view(DecorView-->ViewGroup-->childView)
 
   6.如果一个view设置了onTouchListener，那么onTouchListener中的onTouch方法会被调用；onTouch
     如果返回false，那么onTouchEvent方法会被调用，如果返回true则onTouchEvent方法不会被调用；

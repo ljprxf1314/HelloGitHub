@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyViewActivity extends BaseActivity{
+public class MyViewActivity extends BaseActivity {
 
     @BindView(R.id.btn)
     Button mBtn;
@@ -32,11 +32,13 @@ public class MyViewActivity extends BaseActivity{
 
     @OnClick(R.id.btn)
     public void onViewClicked() {
-        String str = String.valueOf(ViewConfiguration.get(this).getScaledTouchSlop());
-        showToast(str);
+//        String str = String.valueOf(ViewConfiguration.get(this).getScaledTouchSlop());
+//        showToast(str);
+//
+//        ObjectAnimator.ofFloat(mBtn, "translationX", 0, 100).setDuration(100)
+//                .start();
 
-        ObjectAnimator.ofFloat(mBtn, "translationX", 0, 100).setDuration(100)
-                .start();
+
     }
 
     @OnClick({R.id.btn1, R.id.btn2})
