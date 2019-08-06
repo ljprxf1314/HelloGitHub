@@ -1,0 +1,42 @@
+1.startService的生命周期
+onCreate()==>onStartCommand()
+onCreate()只会调用一次,如果多次调用startService会多次调用onStartCommand()方法
+stopService的生命周期
+调用onDestory()方法,只会调用一次
+
+2.bindService生命周期
+bindService有三个传递参数 bindService(Intent service, ServiceConnection conn,
+                      int flags)
+             service:Intent对象
+             conn:传递一个实现ServiceConnection接口的实现类,通过这个接口接收服务开启或者停止的消息，并且这个参数不能为null
+             flags:开启服务时的操作，BIND_AUTO_CREATE代表自动创建service
+
+生命周期:
+bingService开启服务时，根据生命周期里onBind方法的返回值是否为空，有两种情况。
+(1)onBind返回null时:
+onCreate()==>onBind()都只会调用一次
+(2)onBind返回值不为null:
+onCreate() ==> onBind() ==> onServiceConnected()--在activity中实现ServiceConnection接口
+
+unBindService生命周期:
+onUnbind()==>onDestory()只调用一次
+调用unBindService后,再次调用会报异常:java.lang.IllegalArgumentException: Service not registered
+如果在关闭activity时不解绑service,在activity关闭时会自动解绑Service,日志中会打印出一段异常
+
+
+① 先start再bind，如何停止一个Service
+   先stopService或unbindService都可以,先调用stopService不会有任何调用,unbindService会调用onUnbind方法,只有两个都结束后才会调用onDestroy
+
+② Service onStartCommand的返回值(人为制造异常,看不同返回值情况)
+   START_STICKY:第一次为startId = 1,异常后再次调用 onCreate、onStartCommand，并且 startId = 2, 但是 intent = null
+   START_NOT_STICKY:这次并没有重启。
+   START_STICKY_COMPATIBILITY:异常后只调用了oncreate 方法，没有调用 onStartCommand
+   START_REDELIVER_INTENT:可以看出，再次调用 onCreate、onStartCommand，并且 startId = 1, 但是 intent 不为 null
+                          说明该 int 可以保留上次的 startId 与 intent
+
+③ bindService后，ServiceConnection里面的回调方法运行在哪个线程？它们的调用时机分别是什么？
+    ServiceConnection运行在主线程,在bindService成功或失败后调用ServiceConnection的方法
+
+④ bindService后,service如何Activity进行数据交互操作
+    在service中实现onBind方法中返回继承了Binder的实现类,获取service的实例或进行接口回调操作
+
