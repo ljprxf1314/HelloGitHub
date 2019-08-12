@@ -9,6 +9,7 @@ import com.ljp.hellogithub.activity.threadpool.DownloadManager;
 import com.ljp.hellogithub.activity.threadpool.db.DownloadHelper;
 import com.ljp.hellogithub.activity.threadpool.file.FileStorageManager;
 import com.ljp.hellogithub.activity.threadpool.http.HttpManager;
+import com.tencent.mmkv.MMKV;
 
 /**
  * <pre>
@@ -45,6 +46,7 @@ public class App extends Application {
                 .setLocalProgressThreadSize(1)
                 .builder();
         DownloadManager.getInstance().init(config);
-
+        //腾讯存储框架 MMKV
+        MMKV.initialize(this);
     }
 }

@@ -22,12 +22,14 @@ import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.activity.CommonWebActivity;
 import com.ljp.hellogithub.base.BaseActivity;
+import com.ljp.hellogithub.util.MmkvUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +74,9 @@ public class TextViewSpannableActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_view);
         ButterKnife.bind(this);
+
+        MmkvUtils.getInstance().saveLocation(108);
+        Log.e("MmkvUtils","读取位置参数:"+MmkvUtils.getInstance().readLocation());
 
         //了解SpannableString的使用
         //        flags属性就有意思了，共有四种属性：
