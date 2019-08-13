@@ -24,6 +24,7 @@ public class LocalIntentService extends IntentService {
         String action = intent.getStringExtra("task_action");
         Log.e(TAG, "receive task :" +  action);
         SystemClock.sleep(3000);
+        Log.e(TAG,"threadName:"+Thread.currentThread().getName());
         if ("com.ryg.action.TASK1".equals(action)) {
             Log.e(TAG, "handle task: " + action);
         }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ljp.hellogithub.R;
+import com.ljp.hellogithub.activity.threadpool.thread.ThreadMainActivity;
 import com.ljp.hellogithub.base.BaseActivity;
 
 import butterknife.BindView;
@@ -32,7 +33,7 @@ public class MyThreadMain extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_asynctask, R.id.btn_intentservice, R.id.btn_threadpool,R.id.btn_handlerthread})
+    @OnClick({R.id.btn_asynctask, R.id.btn_intentservice, R.id.btn_threadpool,R.id.btn_handlerthread,R.id.btn_thread})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_asynctask:
@@ -47,6 +48,9 @@ public class MyThreadMain extends BaseActivity {
                 break;
             case R.id.btn_handlerthread:
                 startActivity(HandlerThreadActivity.class);
+                break;
+            case R.id.btn_thread://线程操作方式
+                startActivity(ThreadMainActivity.class);
                 break;
         }
     }

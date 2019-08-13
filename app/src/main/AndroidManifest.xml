@@ -88,6 +88,8 @@
         <activity android:name=".activity.threadpool.HandlerThreadActivity"/>
         <activity android:name=".activity.threadpool.ThreadPoolExecutorActivity"/>
 
+        <activity android:name=".activity.threadpool.thread.ThreadMainActivity"/>
+
         <!--rxjava-->
         <activity android:name=".activity.rxjava.RxJavaActivity"/>
     </application>
