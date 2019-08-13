@@ -77,6 +77,7 @@
         <activity android:name=".ui.recycler.RecyclerItemDecorationStyleActivity"/>
 
         <!-- android消息机制 -->
+        <activity android:name=".activity.message_mechanism.MessageMainActivity"/>
         <activity android:name=".activity.message_mechanism.MessageMechanismActivity"/>
 
         <!-- android线程和线程池 -->

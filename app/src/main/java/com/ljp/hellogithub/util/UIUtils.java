@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import com.ljp.hellogithub.App;
 public class UIUtils {
 
     public static int getColor(int colorId){
-        return getContext().getResources().getColor(colorId);
+        return ContextCompat.getColor(getContext(),colorId);
     }
 
     public static View getXmlView(int layoutId){
@@ -85,11 +86,11 @@ public class UIUtils {
     }
 
     public static ColorStateList getColorStateList(int id) {
-        return getContext().getResources().getColorStateList(id);
+        return ContextCompat.getColorStateList(getContext(),id);
     }
     // 鑾峰彇鍥剧墖
     public static Drawable getDrawable(int id) {
-        return getContext().getResources().getDrawable(id);
+        return ContextCompat.getDrawable(getContext(),id);
     }
 
     /**

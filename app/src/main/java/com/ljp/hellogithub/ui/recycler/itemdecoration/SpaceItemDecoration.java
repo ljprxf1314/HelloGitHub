@@ -5,12 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.ljp.hellogithub.R;
+import com.ljp.hellogithub.util.UIUtils;
 
 /**
  * <pre>
@@ -35,11 +37,11 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         this.context = context;
         dividerHeight = dp2px(context,dpValue);
         dividerPaint = new Paint();
-        dividerPaint.setColor(context.getResources().getColor(R.color.transparent));
+        dividerPaint.setColor(ContextCompat.getColor(context,R.color.transparent));
     }
 
     public void setDrawable(int color) {
-        dividerPaint.setColor(context.getResources().getColor(color));
+        dividerPaint.setColor(ContextCompat.getColor(context,color));
     }
 
     @Override

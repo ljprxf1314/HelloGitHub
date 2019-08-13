@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ljp.hellogithub.activity.animation.AnimationMainActivity;
+import com.ljp.hellogithub.activity.message_mechanism.MessageMainActivity;
 import com.ljp.hellogithub.activity.message_mechanism.MessageMechanismActivity;
 import com.ljp.hellogithub.activity.rxjava.RxJavaActivity;
 import com.ljp.hellogithub.activity.service.ServiceDemoActivity;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(UIActivity.class);
                 break;
             case R.id.btn_message://android消息机制
-                startActivity(MessageMechanismActivity.class);
+                startActivity(MessageMainActivity.class);
                 break;
             case R.id.btn_threadpool:
                 startActivity(MyThreadMain.class);

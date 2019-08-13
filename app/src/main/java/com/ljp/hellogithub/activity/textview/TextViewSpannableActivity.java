@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
@@ -143,7 +144,7 @@ public class TextViewSpannableActivity extends BaseActivity {
 
         //9.ImageSpan:设置文本表情
         SpannableString span9 = new SpannableString("在文本中添加表情(表情)");
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        Drawable drawable = ContextCompat.getDrawable(TextViewSpannableActivity.this,R.mipmap.ic_launcher);
         drawable.setBounds(0, 0, 42, 42);//设置边界
         ImageSpan imageSpan = new ImageSpan(drawable);
         span9.setSpan(imageSpan, 6, 8, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
