@@ -24,11 +24,9 @@ import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.activity.threadpool.http.DownloadCallback;
 import com.ljp.hellogithub.base.BaseActivity;
 import com.ljp.hellogithub.net.RestClient;
-import com.ljp.hellogithub.net.RestCreate;
 import com.ljp.hellogithub.net.callback.IError;
 import com.ljp.hellogithub.net.callback.IProgress;
 import com.ljp.hellogithub.net.callback.ISuccess;
-import com.ljp.hellogithub.util.DialogUtil;
 import com.ljp.hellogithub.util.FileUtils;
 import com.ljp.hellogithub.util.Logger;
 import com.ljp.hellogithub.util.permission.KbPermission;
@@ -99,6 +97,7 @@ public class ThreadPoolExecutorActivity extends BaseActivity {
                     }
                 });*/
         DownloadManager.Holder.getInstance();
+
     }
 
 

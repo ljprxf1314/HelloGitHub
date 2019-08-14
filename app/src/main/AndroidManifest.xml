@@ -92,6 +92,9 @@
 
         <!--rxjava-->
         <activity android:name=".activity.rxjava.RxJavaActivity"/>
+
+        <!--Java中File和IO操作-->
+        <activity android:name=".activity.io.FileIOMainActivity"/>
     </application>
 
 </manifest>

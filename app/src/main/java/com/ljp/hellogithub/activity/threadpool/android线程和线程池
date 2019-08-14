@@ -14,6 +14,36 @@
    当任务执行完毕后它会自动停止
    onHandlerIntent():方法用来接收界面传递的参数,区分具体的任务并执行这些任务
 
+4.线程池ThreadPoolExecutor
+  主要参数
+  (int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
+  BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler)
+
+  corePoolSize：线程池的核心线程数，默认情况下，核心线程会在线程池中一直存活，即使他处于闲置状态。如果将ThreadPoolExecutor的
+                allowCoreThreadTimeOut属性设置为true，那么闲置的核心线程在等待新任务到来时会有超时策略，这个时间有keepAliveTime
+                所指定，当等待时间超过keepAliveTime所指定的时长后，核心线程就会被终止
+
+  maximumPoolSize：线程池所能容纳的最大线程数，当活动线程达到这个数量后，后续的新任务会被阻塞
+
+  keepAliveTime：非核心线程闲置时的超时时长，超过这个时长，非核心线程就会被回收。当ThreadPoolExecutor的allowCoreThreadTimeOut为
+                 true时，keepAliveTime同样会作用于核心线程
+
+  unit：指定keepAliveTime的时间单位，这是一个枚举，常用的有TimeUnit.MILLISECONDS(毫秒)、TimeUnit.SECONDS(秒)
+        以及TimeUnit.MINUTES(分钟)等。
+
+  workQueue：线程池中的任务队列，通过线程池中execute方法提交Runnable对象会存储在这个参数中。
+
+  threadFactory：线程工厂，为线程池提供创建新线程的功能。ThreadFactory是一个接口，它只有一个方法Thread new Thread（Runnable r）
+
+  handler：由于队列已满或者是无法成功执行任务，这个时候ThreadPoolExecutor会调用handler的rejectedExecution方法
+                            来通知调用者，handler这个参数一般不常用
+
+  workQueue常用的队列有三种SynchronousQueue,LinkedBlockingDeque,ArrayBlockingQueue,所有队列都实现了BlockingQueue接口：
+       ArrayBlockingQueue：基于数组的FIFO队列，是有界的，创建时必须指定大小
+       LinkedBlockingQueue： 基于链表的FIFO队列，是无界的，默认大小是 Integer.MAX_VALUE
+       SynchronousQueue:一个比较特殊的队列，虽然它是无界的，但它不会保存任务，每一个新增任务的线程必须等待另一个线程取出任务，
+                        也可以把它看成容量为0的队列
+
 
 
 下载目录位置:

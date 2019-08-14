@@ -43,11 +43,11 @@ public class MyThreadMain extends BaseActivity {
                 Toast.makeText(this, "点击了", Toast.LENGTH_SHORT).show();
                 startIntentService();
                 break;
-            case R.id.btn_threadpool:
-                startActivity(ThreadPoolExecutorActivity.class);
-                break;
             case R.id.btn_handlerthread:
                 startActivity(HandlerThreadActivity.class);
+                break;
+            case R.id.btn_threadpool:
+                startActivity(ThreadPoolExecutorActivity.class);
                 break;
             case R.id.btn_thread://线程操作方式
                 startActivity(ThreadMainActivity.class);
