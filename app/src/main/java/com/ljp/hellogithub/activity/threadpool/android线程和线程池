@@ -39,12 +39,17 @@
                             来通知调用者，handler这个参数一般不常用
 
   workQueue常用的队列有三种SynchronousQueue,LinkedBlockingDeque,ArrayBlockingQueue,所有队列都实现了BlockingQueue接口：
-       ArrayBlockingQueue：基于数组的FIFO队列，是有界的，创建时必须指定大小
+       ArrayBlockingQueue：基于数组的FIFO队列，是有界的，创建时必须指定大小。如果任务超出队列长度会报异常
        LinkedBlockingQueue： 基于链表的FIFO队列，是无界的，默认大小是 Integer.MAX_VALUE
        SynchronousQueue:一个比较特殊的队列，虽然它是无界的，但它不会保存任务，每一个新增任务的线程必须等待另一个线程取出任务，
-                        也可以把它看成容量为0的队列
+                        也可以把它看成容量为0的队列。超出最大线程数后，会报异常
 
-
+5.Android中常用的四种线程池
+  newFixedThreadPool：固定的线程数量，只有核心线程数
+  newCachedThreadPool：核心线程数为0，最大线程数是Integer.MAX_VALUE，线程限制60秒超时，平常不会有线程开启，基本不会占用任何系统资源。
+                       比较合适处理大量的耗时较少的任务。
+  newScheduledThreadPool：核心线程数量固定，非核心线程数没有限制，并且非核心线程限制时会被立刻回收。这类线程用于执行定时任务和具有固定周期的重复任务
+  newSingleThreadExecutor：线程池内只有一个核心线程，它确保所有的任务都在同一个线程中顺序执行
 
 下载目录位置:
 getCacheDir()方法用于获取/data/data//cache目录
