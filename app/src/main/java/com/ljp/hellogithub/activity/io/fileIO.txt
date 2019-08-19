@@ -1,0 +1,6 @@
+文件IO操作:
+1.使用IO文件流从网络下载文件,写入sd卡上
+3.字节流转成字符流
+4.字符流转换成字节流
+5.使用RandomAccessFile进行分段下载
+https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566809125&di=74e028b0f5bd9c69a42d0e429351e209&imgtype=jpg&er=1&src=http%3A%2F%2Fpic39.nipic.com%2F20140327%2F17556992_134152074389_2.jpg
