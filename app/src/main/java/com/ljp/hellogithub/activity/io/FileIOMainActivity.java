@@ -21,13 +21,17 @@ import com.ljp.hellogithub.util.permission.KbPermission;
 import com.ljp.hellogithub.util.permission.KbPermissionListener;
 import com.ljp.hellogithub.util.permission.KbPermissionUtils;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.WeakHashMap;
@@ -58,6 +62,12 @@ public class FileIOMainActivity extends BaseActivity {
     TextView mTvText;
     @BindView(R.id.btn3)
     Button mBtn3;
+    @BindView(R.id.btn4)
+    Button mBtn4;
+    @BindView(R.id.btn5)
+    Button mBtn5;
+    @BindView(R.id.btn6)
+    Button mBtn6;
 
     private String TAG = "FileIOMainActivity";
 
@@ -79,7 +89,7 @@ public class FileIOMainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3})
+    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3,R.id.btn4, R.id.btn5, R.id.btn6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn1:
@@ -111,6 +121,14 @@ public class FileIOMainActivity extends BaseActivity {
                 break;
             case R.id.btn3:
                 readTxt();
+                break;
+            case R.id.btn4://字节流转字符流读取文件
+                readInputToReader();
+                break;
+            case R.id.btn5:
+                readerText();
+                break;
+            case R.id.btn6:
                 break;
         }
     }
@@ -185,6 +203,13 @@ public class FileIOMainActivity extends BaseActivity {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                is.close();
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -192,7 +217,7 @@ public class FileIOMainActivity extends BaseActivity {
      * 使用字节流向文件中写入文字
      */
     private void writeTxt(String str) {
-        File file = new File(createDir(strPath),"aaa.txt");
+        File file = new File(createDir(strPath), "aaa.txt");
         //1.判断文件是否存在,不存在就创建
         if (!file.exists()) {
             try {
@@ -204,11 +229,13 @@ public class FileIOMainActivity extends BaseActivity {
             }
         }
 
+        InputStream is = null;
+        OutputStream os = null;
         try {
             //创建字符串输入流
-            InputStream is = new ByteArrayInputStream(str.getBytes("UTF-8"));
+            is = new ByteArrayInputStream(str.getBytes("UTF-8"));
             //创建文件输出流
-            OutputStream os = new FileOutputStream(file);
+            os = new FileOutputStream(file);
             //写入文件中
             byte[] bytes = new byte[1024];
             int len = 0;
@@ -222,36 +249,129 @@ public class FileIOMainActivity extends BaseActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                is.close();
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
+    /**
+     * 字节流读取文字
+     */
     private void readTxt() {
-        File file = new File(strPath+"aaa.txt");
+        File file = new File(strPath + "aaa.txt");
         if (!file.exists()) {
             showToast("文件不存在,请先创建文件");
             return;
         }
-        InputStream is;
+        InputStream is = null;
         try {
             //获取文件输入流
             is = new FileInputStream(file);
             StringBuffer sb = new StringBuffer();
             //1.单个字节读取,容易出现文字读取不全问题,且效率低下
-//            int temp;
-//            while ((temp = is.read()) != -1) {
-//                sb.append((char) temp);
-//            }
+            //            int temp;
+            //            while ((temp = is.read()) != -1) {
+            //                sb.append((char) temp);
+            //            }
             //2.通过数组读取效率高,字符串的话不容易出现乱码
             byte[] bytes = new byte[1024];
-            int len=0;
-            while ((len=is.read(bytes))!=-1){
-                String string = new String(bytes,0,len);
+            int len = 0;
+            while ((len = is.read(bytes)) != -1) {
+                String string = new String(bytes, 0, len);
                 sb.append(string);
             }
 
             mTvText.setText(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (is!=null)
+                is.close();
+            }catch (IOException e){
+            }
+        }
+    }
+
+    /**
+     * 字节流转字符流读取文件
+     */
+    private void readInputToReader(){
+        File file = new File(strPath + "aaa.txt");
+        if (!file.exists()) {
+            showToast("文件不存在,请先创建文件");
+            return;
+        }
+        InputStream is = null;
+        BufferedReader br = null;
+        try {
+            //获取文件输入流
+            is = new FileInputStream(file);
+            //转换成字符流
+            InputStreamReader inputStreamReader =  new InputStreamReader(is);
+            //使用缓冲字符流
+            br = new BufferedReader(inputStreamReader);
+
+            StringBuffer sb = new StringBuffer();
+            String str;
+            while ((str = br.readLine()) != null) {
+                sb.append(str);
+            }
+
+            mTvText.setText(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                is.close();
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 使用文件字符流读取文字
+     */
+    private void readerText(){
+        File file = new File(strPath + "aaa.txt");
+        if (!file.exists()) {
+            showToast("文件不存在,请先创建文件");
+            return;
+        }
+        BufferedReader bufferedReader = null;
+        try {
+            //文件读取流
+            FileReader fileReader = new FileReader(file);
+            //使用缓冲字符流
+            bufferedReader = new BufferedReader(fileReader);
+
+            StringBuffer sb = new StringBuffer();
+            //1.读取一行
+//            String str;
+//            while ((str = bufferedReader.readLine()) != null) {
+//                sb.append(str);
+//            }
+            //2,
+            int temp;
+            while ((temp = bufferedReader.read()) != -1) {
+                sb.append((char) temp);
+            }
+            mTvText.setText(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -268,4 +388,5 @@ public class FileIOMainActivity extends BaseActivity {
         }
         return fileDir;
     }
+
 }

@@ -37,6 +37,24 @@
         android:layout_height="wrap_content"
         android:text="使用字节流读取文件"/>
 
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="字节流转字符流读取文件"/>
+
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用字符流读取文件"/>
+
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用RandomAccessFile分段下载文件"/>
+
     <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="80dp"
