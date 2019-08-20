@@ -40,4 +40,11 @@
         android:textAllCaps="false"
         android:text="Thread使用方式"/>
 
+    <Button
+        android:id="@+id/btn_countdownlatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="CountDownLatch使用方式"/>
+
 </LinearLayout>

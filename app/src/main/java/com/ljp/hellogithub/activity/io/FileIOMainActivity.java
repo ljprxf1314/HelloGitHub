@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ljp.hellogithub.R;
+import com.ljp.hellogithub.activity.io.callback.DownloadCallback;
+import com.ljp.hellogithub.activity.threadpool.http.HttpManager;
 import com.ljp.hellogithub.base.BaseActivity;
 import com.ljp.hellogithub.net.RestCreate;
 import com.ljp.hellogithub.util.permission.KbPermission;
@@ -35,6 +37,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.WeakHashMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +55,7 @@ import retrofit2.Response;
  * Created by lijipei on 2019/8/14.
  */
 
-public class FileIOMainActivity extends BaseActivity {
+public class FileIOMainActivity extends BaseActivity implements DownloadCallback{
 
     @BindView(R.id.btn1)
     Button mBtn1;
@@ -78,15 +85,27 @@ public class FileIOMainActivity extends BaseActivity {
     private static final String picPath = Environment
             .getExternalStorageDirectory() + "/downloadFile/img/";
     private String downloadUrl;
+    //文件总长度
+    private long contentLength;
     //文本文件存储路径
     private static final String strPath = Environment
             .getExternalStorageDirectory() + "/downloadFile/text/";
+
+    private int count = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_io);
         ButterKnife.bind(this);
+
+//        FutureTask<Integer> futureTask = new FutureTask<Integer>(new Callable<Integer>() {
+//            @Override
+//            public Integer call() throws Exception {
+//                return null;
+//            }
+//        });
+//        futureTask.get();
     }
 
     @OnClick({R.id.btn1, R.id.btn2, R.id.btn3,R.id.btn4, R.id.btn5, R.id.btn6})
@@ -129,6 +148,7 @@ public class FileIOMainActivity extends BaseActivity {
                 readerText();
                 break;
             case R.id.btn6:
+                randomAccessDownload();
                 break;
         }
     }
@@ -374,6 +394,77 @@ public class FileIOMainActivity extends BaseActivity {
             }
         }
     }
+
+    /**
+     * 多线程下载
+     */
+    private void randomAccessDownload(){
+        final ExecutorService executorService = Executors.newFixedThreadPool(count);
+
+        //保存到本地
+        String name = System.currentTimeMillis() + URL.substring(URL.lastIndexOf("."));
+        downloadUrl = picPath + name;
+
+        final File file = new File(createDir(picPath), name);
+        Log.e(TAG, "下载路径:" + file.toString());
+
+        HttpManager.getInstance().asyncRequest(URL, new okhttp3.Callback() {
+
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                if (response.isSuccessful()){
+                    contentLength = response.body().contentLength();
+                    Log.e(TAG, "总长度:"+contentLength);
+                    long threadDownloadLenght = contentLength/count;
+                    Log.e(TAG, "threadDownloadLenght:"+threadDownloadLenght);
+                    for (int i=0;i<count;i++){
+                        long startSize = i*threadDownloadLenght;
+                        long endSize = 0;
+                        if (i == count-1){
+                            endSize = contentLength-1;
+                        }else{
+                            endSize = (i+1)*threadDownloadLenght-1;
+                        }
+                        Log.e(TAG, i+"--start:"+startSize+"--end:"+endSize);
+                        executorService.execute(new DownloadImgRunnable(startSize,endSize,file,URL,
+                                FileIOMainActivity.this));
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void success() {
+        final File file = new File(downloadUrl);
+        try {
+            long lenght = file.length();
+            Log.e(TAG, "文件长度->"+lenght);
+            if (lenght==contentLength){
+                Log.e(TAG, "下载完成");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap bitmap = BitmapFactory.decodeFile(file.toString());
+                        mIvPic.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void fault() {
+
+    }
+
 
     /**
      * 判断目录是否存在,不存在就创建

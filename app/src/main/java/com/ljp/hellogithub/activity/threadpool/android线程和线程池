@@ -52,6 +52,21 @@
                           这类线程用于执行定时任务和具有固定周期的重复任务
   newSingleThreadExecutor：线程池内只有一个核心线程，它确保所有的任务都在同一个线程中顺序执行
 
+  线程池常用方法:
+  shutDown()，关闭线程池，需要执行完已提交的任务；
+  shutDownNow()，关闭线程池，并尝试结束已提交的任务；
+  allowCoreThreadTimeOut(boolen)，允许核心线程闲置超时回收；
+  execute()，提交任务无返回值；
+  submit()，提交任务有返回值；
+
+6.使用CountDownLatch控制多线程并发等待
+  你是否遇到这这样一种情况，我们要举行一个视频会议，有若干的参会人员，需要等待所有的人员
+  到齐后视频会议才能开始。为了解决这个问题，Java API提供了一个线程同步辅助类CountDownLatch，
+  使用这个辅助类可以让线程等待其它线程完成一组操作后才能执行，否则就一直等待。这个类使用一个
+  整形参数来初始化，这个整形参数代表着等待其他线程的数量，使用await()方法让线程开始等待其他
+  线程执行完毕，每一个线程执行完毕后后调用countDown()方法，这个方法会让CountDownLatch内部
+  的计数器减1，当计数器变为0的时候，CountDownLatch类将唤醒所有调用await()方法并进入WAITING状态线程。
+
 下载目录位置:
 getCacheDir()方法用于获取/data/data//cache目录
 getFilesDir()方法用于获取/data/data//files目录
