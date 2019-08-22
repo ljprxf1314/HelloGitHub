@@ -95,6 +95,10 @@
 
         <!--Java中File和IO操作-->
         <activity android:name=".activity.io.FileIOMainActivity"/>
+
+        <!--注解-->
+        <activity android:name=".activity.annotation.AnnotationMainActivity"/>
+
     </application>
 
 </manifest>

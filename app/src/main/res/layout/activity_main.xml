@@ -76,6 +76,13 @@
                 android:layout_height="wrap_content"
                 android:text="RxJava"
                 android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btn_annotation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Annotation、反射"
+                android:textAllCaps="false"/>
         </LinearLayout>
 
     </ScrollView>

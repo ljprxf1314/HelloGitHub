@@ -1,0 +1,52 @@
+Java注解
+元标签有5中。
+
+@Retention:
+    SOURCE：只在源码中有效，编译时抛弃，如上面的@Override。
+    CLASS：编译class文件时生效。
+    RUNTIME：运行时才生效。
+
+@Documented:
+
+@Target:
+    TYPE：类、接口、枚举、注解类型。
+    FIELD：类成员（构造方法、方法、成员变量）。
+    METHOD：方法。
+    PARAMETER：参数。
+    CONSTRUCTOR：构造器。
+    LOCAL_VARIABLE：局部变量。
+    ANNOTATION_TYPE：注解。
+    PACKAGE：包声明。
+    TYPE_PARAMETER：类型参数。
+    TYPE_USE：类型使用声明。
+
+@Inherited
+
+@Repeatable
+
+Java反射
+与反射相关的类
+Class类	代表类的实体，在运行的Java应用程序中表示类和接口
+  getClassLoader()	获得类的加载器
+
+Field类	代表类的成员变量（成员变量也称为类的属性）
+
+Method类	代表类的方法
+
+Constructor类	代表类的构造方法
+
+获得类中构造器相关的方法
+
+方法用途
+
+getConstructor(Class...<?> parameterTypes)
+获得该类中与参数类型匹配的公有构造方法
+
+getConstructors()
+获得该类的所有公有构造方法
+
+getDeclaredConstructor(Class...<?> parameterTypes)
+获得该类中与参数类型匹配的构造方法
+
+getDeclaredConstructors()
+获得该类所有构造方法
