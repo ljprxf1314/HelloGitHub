@@ -99,6 +99,9 @@
         <!--注解-->
         <activity android:name=".activity.annotation.AnnotationMainActivity"/>
 
+        <!--Okhttp、retrofit-->
+        <activity android:name=".activity.network.NetworkMainActivity"/>
+
     </application>
 
 </manifest>
