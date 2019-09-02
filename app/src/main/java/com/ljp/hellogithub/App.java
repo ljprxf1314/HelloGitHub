@@ -2,6 +2,7 @@ package com.ljp.hellogithub;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Debug;
 import android.os.Handler;
 
 import com.ljp.hellogithub.activity.threadpool.DownloadConfig;
@@ -9,6 +10,7 @@ import com.ljp.hellogithub.activity.threadpool.DownloadManager;
 import com.ljp.hellogithub.activity.threadpool.db.DownloadHelper;
 import com.ljp.hellogithub.activity.threadpool.file.FileStorageManager;
 import com.ljp.hellogithub.activity.threadpool.http.HttpManager;
+import com.ljp.hellogithub.util.LaunchTimer;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -28,8 +30,17 @@ public class App extends Application {
     public static int mainThreadId = 0;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        LaunchTimer.startRecord();
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+
+//        Debug.startMethodTracing("APP");
+
         context = getApplicationContext();
         handler = new Handler();
         mainThread = Thread.currentThread();
@@ -48,5 +59,7 @@ public class App extends Application {
         DownloadManager.getInstance().init(config);
         //腾讯存储框架 MMKV
         MMKV.initialize(this);
+
+//        Debug.stopMethodTracing();
     }
 }

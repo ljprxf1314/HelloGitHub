@@ -10,6 +10,7 @@ import com.ljp.hellogithub.activity.rxjava.http.RetrofitClient;
 import com.ljp.hellogithub.util.MD5Util;
 
 import java.util.WeakHashMap;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -74,13 +75,18 @@ public class RxJava02 {
         params.put("logincode","13683310026");
         params.put("pwd",MD5Util.md5("123456"));
 
+        Log.e(TAG,"订阅成功");
         Api api = RetrofitClient.create().create(Api.class);
         api.post("/mobile/work/loginControl/login.action",params)
+                .delay(3000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())               //在IO线程进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求结果
                 .subscribe(new Observer<String>() {
                     @Override
-                    public void onSubscribe(Disposable d) {}
+                    public void onSubscribe(Disposable d) {
+                        Log.e(TAG,"订阅成功");
+                        d.dispose();
+                    }
 
                     @Override
                     public void onNext(String value) {
