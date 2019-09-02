@@ -99,7 +99,7 @@
         <!--注解-->
         <activity android:name=".activity.annotation.AnnotationMainActivity"/>
 
-        <!--网络请求-->
+        <!--Okhttp、retrofit-->
         <activity android:name=".activity.network.NetworkMainActivity"/>
 
     </application>

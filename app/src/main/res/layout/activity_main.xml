@@ -88,7 +88,7 @@
                 android:id="@+id/btn_network"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="网络封装"
+                android:text="Okhttp3.0、Retrofit2.0网络框架学习"
                 android:textAllCaps="false"/>
         </LinearLayout>
 

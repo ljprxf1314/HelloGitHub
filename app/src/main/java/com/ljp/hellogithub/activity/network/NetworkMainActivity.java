@@ -2,6 +2,7 @@ package com.ljp.hellogithub.activity.network;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.ljp.hellogithub.net.callback.ISuccess;
 import com.ljp.hellogithub.net.rx.RxRestClient;
 import com.ljp.hellogithub.util.MD5Util;
 
+import java.io.IOException;
 import java.util.WeakHashMap;
 
 import butterknife.BindView;
@@ -27,6 +29,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by lijipei on 2019/9/2.
@@ -40,6 +48,18 @@ public class NetworkMainActivity extends BaseActivity {
     TextView mTvText;
     @BindView(R.id.btn_login)
     Button mBtnLogin;
+
+    @BindView(R.id.btn_get)
+    Button mBtnGet;
+    @BindView(R.id.btn_post)
+    Button mBtnPost;
+
+    private String TAG = "NetworkMainActivity";
+
+    OkHttpClient client = new OkHttpClient();
+
+    private String url = "https://yxtest.sqkx.net";
+
 
     WeakHashMap<String, Object> params = new WeakHashMap<>();
     private String login = "/mobile/work/loginControl/login.action";
@@ -57,7 +77,7 @@ public class NetworkMainActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn_login,R.id.btn_login_rx})
+    @OnClick({R.id.btn_get, R.id.btn_post,R.id.btn_login,R.id.btn_login_rx})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -84,6 +104,20 @@ public class NetworkMainActivity extends BaseActivity {
             case R.id.btn_login_rx:
 //                onCallRx();
                 onCallRxRestClient();
+                break;
+            case R.id.btn_get:
+                try {
+                    getRun();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.btn_post:
+                try {
+                    postStr();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -146,5 +180,95 @@ public class NetworkMainActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    /**
+     * get请求
+     *
+     * @return
+     * @throws IOException
+     */
+    private void getRun() throws IOException {
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        Log.e(TAG,response.body().string());
+                    } else {
+                        throw new IOException("Unexpected code " + response);
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * post提交json数据
+     *
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    private void postRun(String json) throws IOException {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        Log.e(TAG, response.body().string());
+                    } else {
+                        throw new IOException("Unexpected code " + response);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * post键值对请求
+     *
+     * @return
+     */
+    private void postStr() throws IOException {
+        final FormBody fromBody = new FormBody.Builder()
+                .add("", "")
+                .build();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    Request request = new Request.Builder().url(url).post(fromBody).build();
+                    response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        Log.e(TAG, response.body().string());
+                    } else {
+                        throw new IOException("Unexpected code " + response);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 }
