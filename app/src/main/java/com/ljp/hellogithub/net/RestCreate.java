@@ -31,11 +31,21 @@ public class RestCreate {
         //        private static final ArrayList<Interceptor> INTERCEPTORS =
 
         private static final OkHttpClient.Builder getOkHttpBuilder() {
+
+//            LoggingInterceptor httpLoggingInterceptor = new LoggingInterceptor.Builder()
+//                    .loggable(BuildConfig.DEBUG)
+//                    .setLevel(Level.BASIC)
+//                    .log(Platform.INFO)
+//                    .request("请求")
+//                    .response("响应")
+//                    .build();
+//            BUILDER.addInterceptor(httpLoggingInterceptor);
             return BUILDER;
         }
 
         private static final OkHttpClient OK_HTTP_CLIENT = getOkHttpBuilder().
                 connectTimeout(TIME_OUT, TimeUnit.SECONDS).
+
                 build();
     }
 

@@ -1,5 +1,7 @@
 package com.ljp.hellogithub.net.rx;
 
+import com.ljp.hellogithub.bean.RequestLoginBean;
+
 import java.util.WeakHashMap;
 
 import io.reactivex.Observable;
@@ -38,6 +40,10 @@ public interface RxRestService {
     @FormUrlEncoded
     @POST
     Observable<String> post(@Url String url, @FieldMap WeakHashMap<String, Object> params);
+
+    //TODO 多余代码
+    @POST
+    Observable<ResponseBody> postBody(@Url String url, @Body RequestLoginBean params);
 
     @POST
     Observable<String> postRaw(@Url String url, @Body RequestBody body);

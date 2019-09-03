@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
+import com.ljp.hellogithub.bean.RequestLoginBean;
+import com.ljp.hellogithub.bean.UserBean;
 import com.ljp.hellogithub.net.RestClient;
 import com.ljp.hellogithub.net.RestCreate;
+import com.ljp.hellogithub.net.RestService;
 import com.ljp.hellogithub.net.callback.IError;
 import com.ljp.hellogithub.net.callback.ISuccess;
 import com.ljp.hellogithub.net.rx.RxRestClient;
@@ -35,6 +38,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by lijipei on 2019/9/2.
@@ -77,7 +87,7 @@ public class NetworkMainActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn_get, R.id.btn_post,R.id.btn_login,R.id.btn_login_rx})
+    @OnClick({R.id.btn_get, R.id.btn_post, R.id.btn_login, R.id.btn_login_rx,R.id.btn_retrofit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -102,8 +112,8 @@ public class NetworkMainActivity extends BaseActivity {
                         .post();
                 break;
             case R.id.btn_login_rx:
-//                onCallRx();
-                onCallRxRestClient();
+                onCallRx();
+                //                                onCallRxRestClient();
                 break;
             case R.id.btn_get:
                 try {
@@ -118,13 +128,75 @@ public class NetworkMainActivity extends BaseActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                //                RequestLoginBean bean = new RequestLoginBean();
+                //                bean.logincode="13683310026";
+                //                bean.pwd=MD5Util.md5("123456");
+
+                //                FormBody body = new FormBody.Builder()
+                //                        .add("logincode", "13683310026")
+                //                        .add("pwd", MD5Util.md5("123456"))
+                //                        .build();
+                //
+                //                Observable<String> observable = RestCreate.getRxRestService().postRaw(login, body);
+                //                observable.subscribeOn(Schedulers.io())
+                //                        .observeOn(AndroidSchedulers.mainThread())
+                //                        .subscribe(new Observer<String>() {
+                //                            @Override
+                //                            public void onSubscribe(Disposable d) {
+                //
+                //                            }
+                //
+                //                            @Override
+                //                            public void onNext(String s) {
+                //                                try {
+                //                                    showToast(s);
+                //                                } catch (Exception e) {
+                //                                    e.printStackTrace();
+                //                                }
+                //                            }
+                //
+                //                            @Override
+                //                            public void onError(Throwable e) {
+                //                                showToast("登录失败");
+                //                            }
+                //
+                //                            @Override
+                //                            public void onComplete() {
+                //                                showToast("请求结束");
+                //                            }
+                //                        });
+                break;
+            case R.id.btn_retrofit:
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://yxtest.sqkx.net")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .build();
+
+                RestService service = retrofit.create(RestService.class);
+                Call<UserBean> call = service.postLogin(login, params);
+                call.enqueue(new Callback<UserBean>() {
+                    @Override
+                    public void onResponse(Call<UserBean> call, retrofit2.Response<UserBean> response) {
+                        if (response.isSuccessful()){
+                            showToast("登录成功");
+                            showToast(response.body().getName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserBean> call, Throwable t) {
+                        showToast("请求失败");
+                    }
+                });
                 break;
         }
     }
 
     //TODO 第一种请求方法
-    private void onCallRx(){
-        Observable<String> observable = RestCreate.getRxRestService().post(login,params);
+    private void onCallRx() {
+        Observable<String> observable = RestCreate.getRxRestService().post(login, params);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<String>() {
@@ -151,7 +223,7 @@ public class NetworkMainActivity extends BaseActivity {
     }
 
     //TODO 第二种网络请求
-    private void onCallRxRestClient(){
+    private void onCallRxRestClient() {
         RxRestClient.builder()
                 .url(login)
                 .params(params)
@@ -198,11 +270,11 @@ public class NetworkMainActivity extends BaseActivity {
                 try {
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
-                        Log.e(TAG,response.body().string());
+                        Log.e(TAG, response.body().string());
                     } else {
                         throw new IOException("Unexpected code " + response);
                     }
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

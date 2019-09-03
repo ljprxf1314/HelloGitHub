@@ -1,5 +1,7 @@
 package com.ljp.hellogithub.net;
 
+import com.ljp.hellogithub.bean.UserBean;
+
 import java.util.WeakHashMap;
 
 import okhttp3.MultipartBody;
@@ -36,6 +38,11 @@ public interface RestService {
     @FormUrlEncoded
     @POST
     Call<String> post(@Url String url, @FieldMap WeakHashMap<String, Object> params);
+
+    //TODO 多添加的代码
+    @FormUrlEncoded
+    @POST
+    Call<UserBean> postLogin(@Url String url, @FieldMap WeakHashMap<String, Object> params);
 
     @POST
     Call<String> postRaw(@Url String url, @Body RequestBody body);
