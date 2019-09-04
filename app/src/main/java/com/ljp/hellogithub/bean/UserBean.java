@@ -15,13 +15,13 @@ import java.util.List;
 public class UserBean extends BaseBean implements Serializable {
 
 //    {"code":200,"data":{"count":0,"logincode":"9001","merchantId":0,
-    //            "name":"冀培","nickname":"冀培","shopAddress":"","shopCusTel":"","shopId":"100001180302112001457399101",
-    //            "shopName":"开发人员专用测试店铺",
-    //            "token":"7ae69e74044c4cfdb9c0b9d2d2763831","userTel":"","userid":"999999180307153347070299883"},
-    //        "httpCode":"OK"}
+//                "name":"冀培","nickname":"冀培","shopAddress":"","shopCusTel":"","shopId":"100001180302112001457399101",
+//                "shopName":"开发人员专用测试店铺",
+//                "token":"7ae69e74044c4cfdb9c0b9d2d2763831","userTel":"","userid":"999999180307153347070299883"},
+//            "httpCode":"OK"}
 
     private String code = "";
-    private String desc = "";
+    private String httpCode = "";
 
     private UserBean data;
 
@@ -50,6 +50,15 @@ public class UserBean extends BaseBean implements Serializable {
     private String roleCode = "";//角色编码
     private String roleName = "";//角色名称
 
+
+    public String getHttpCode() {
+        return httpCode;
+    }
+
+    public void setHttpCode(String httpCode) {
+        this.httpCode = httpCode;
+    }
+
     @Override
     public String getCode() {
         return code;
@@ -58,16 +67,6 @@ public class UserBean extends BaseBean implements Serializable {
     @Override
     public void setCode(String code) {
         this.code = code;
-    }
-
-    @Override
-    public String getDesc() {
-        return desc;
-    }
-
-    @Override
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getRoleName() {

@@ -1,5 +1,6 @@
 package com.ljp.hellogithub.net.rx;
 
+import com.ljp.hellogithub.bean.NewVersionBean;
 import com.ljp.hellogithub.bean.RequestLoginBean;
 
 import java.util.WeakHashMap;
@@ -43,7 +44,7 @@ public interface RxRestService {
 
     //TODO 多余代码
     @POST
-    Observable<ResponseBody> postBody(@Url String url, @Body RequestLoginBean params);
+    Observable<NewVersionBean> postBody(@Url String url, @Body RequestBody params);
 
     @POST
     Observable<String> postRaw(@Url String url, @Body RequestBody body);

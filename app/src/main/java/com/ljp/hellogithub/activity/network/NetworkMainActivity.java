@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
+import com.ljp.hellogithub.bean.BriefingBean;
+import com.ljp.hellogithub.bean.NewVersionBean;
 import com.ljp.hellogithub.bean.RequestLoginBean;
 import com.ljp.hellogithub.bean.UserBean;
 import com.ljp.hellogithub.net.RestClient;
@@ -20,7 +22,11 @@ import com.ljp.hellogithub.net.rx.RxRestClient;
 import com.ljp.hellogithub.util.MD5Util;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,12 +39,16 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -73,6 +83,7 @@ public class NetworkMainActivity extends BaseActivity {
 
     WeakHashMap<String, Object> params = new WeakHashMap<>();
     private String login = "/mobile/work/loginControl/login.action";
+    private String queryVersion = "/mobile/work/loginControl/getNewVersion.action";
 
     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -87,7 +98,7 @@ public class NetworkMainActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn_get, R.id.btn_post, R.id.btn_login, R.id.btn_login_rx,R.id.btn_retrofit})
+    @OnClick({R.id.btn_get, R.id.btn_post, R.id.btn_login, R.id.btn_login_rx, R.id.btn_retrofit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -123,70 +134,100 @@ public class NetworkMainActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_post:
-                try {
-                    postStr();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //                try {
+                //                    postStr();
+                //                } catch (IOException e) {
+                //                    e.printStackTrace();
+                //                }
 
                 //                RequestLoginBean bean = new RequestLoginBean();
-                //                bean.logincode="13683310026";
-                //                bean.pwd=MD5Util.md5("123456");
+                //                bean.logincode = "13683310026";
+                //                bean.pwd = MD5Util.md5("123456");
 
                 //                FormBody body = new FormBody.Builder()
                 //                        .add("logincode", "13683310026")
                 //                        .add("pwd", MD5Util.md5("123456"))
                 //                        .build();
-                //
-                //                Observable<String> observable = RestCreate.getRxRestService().postRaw(login, body);
-                //                observable.subscribeOn(Schedulers.io())
-                //                        .observeOn(AndroidSchedulers.mainThread())
-                //                        .subscribe(new Observer<String>() {
-                //                            @Override
-                //                            public void onSubscribe(Disposable d) {
-                //
-                //                            }
-                //
-                //                            @Override
-                //                            public void onNext(String s) {
-                //                                try {
-                //                                    showToast(s);
-                //                                } catch (Exception e) {
-                //                                    e.printStackTrace();
-                //                                }
-                //                            }
-                //
-                //                            @Override
-                //                            public void onError(Throwable e) {
-                //                                showToast("登录失败");
-                //                            }
-                //
-                //                            @Override
-                //                            public void onComplete() {
-                //                                showToast("请求结束");
-                //                            }
-                //                        });
+
+//                FormBody body = new FormBody.Builder()
+//                        .add("apptype", "android")
+//                        .add("source", "5")
+//                        .add("curVersion", "20")
+//                        .build();
+
+                Observable<String> observable = RestCreate.getRxRestService().post(login, params);
+                observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<String>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                try {
+                                    showToast(s);
+                                    Log.e(TAG,s);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG,"转换失败");
+                                    showToast("转换失败");
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                showToast("登录失败");
+                                Log.e(TAG,"出现异常");
+                            }
+
+                            @Override
+                            public void onComplete() {
+                            }
+                        });
                 break;
             case R.id.btn_retrofit:
+
+                //            {"code":200,"data":{"avatar":"https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epmcDsW98VNeNzic20gokgIeHicnfzcpT3RgFxMGQICTQ5rkicKJoICZI19Le42DOTGJtIw1HNFYGFnA/132",
+                // "carid":"100001190417113240251519302","carid_nameref":"另一个车仓库","count":0,"id":"999999190417113303616003753","img":"https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epmcDsW98VNeNzic20gokgIeHicnfzcpT3RgFxMGQICTQ5rkicKJoICZI19Le42DOTGJtIw1HNFYGFnA/132",
+                // "logincode":"13683310026","merchantId":0,"name":"冀培","nickname":"冀培","orgid":"100001","shopAddress":"","shopCusTel":"",
+                // "shopId":"100001190415092743888168910",
+                // "shopList":[{"ms_id":"10000100017","ms_isCheck":false,"ms_name":"鑫鑫惠民超市","ms_orgid":"100001"},
+                // {"ms_id":"100001181011182232396130243","ms_isCheck":false,"ms_name":"青县测试商铺","ms_orgid":"100001"},
+                // {"ms_id":"100001190415092743888168910","ms_isCheck":false,"ms_name":"北京丰台经销商","ms_orgid":"100001"},
+                // {"ms_id":"100001190416135513125353538","ms_isCheck":false,"ms_name":"北京海淀演示店铺","ms_orgid":"100001"},
+                // {"ms_id":"100001190605110220022054582","ms_isCheck":false,"ms_name":"北京朝阳经销商","ms_orgid":"100001"}],
+                // "shopName":"北京丰台经销商","token":"46b9ee1aa1e94c5dbcd139434b9e4e1c","userTel":"","userid":"100001180403190200322800100",
+                //                    "usertype":"2005","workid":"999999190417113303616003753"},"desc":"登录成功","httpCode":"OK"}
+
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://yxtest.sqkx.net")
+                        .client(OK_HTTP_CLIENT)
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build();
 
+
+                WeakHashMap<String, Object> map = new WeakHashMap<>();
+                map.put("apptype", "android");
+                map.put("source", "5");
+                map.put("curVersion", "20");
+
+
                 RestService service = retrofit.create(RestService.class);
-                Call<UserBean> call = service.postLogin(login, params);
-                call.enqueue(new Callback<UserBean>() {
+                Call<NewVersionBean> call = service.postGson(queryVersion, map);
+                call.enqueue(new Callback<NewVersionBean>() {
                     @Override
-                    public void onResponse(Call<UserBean> call, retrofit2.Response<UserBean> response) {
-                        if (response.isSuccessful()){
+                    public void onResponse(Call<NewVersionBean> call, retrofit2.Response<NewVersionBean> response) {
+                        if (response.isSuccessful()) {
                             showToast("登录成功");
-                            showToast(response.body().getName());
+                            showToast(response.toString());
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<UserBean> call, Throwable t) {
+                    public void onFailure(Call<NewVersionBean> call, Throwable t) {
                         showToast("请求失败");
                     }
                 });
@@ -343,4 +384,56 @@ public class NetworkMainActivity extends BaseActivity {
         }).start();
 
     }
+
+
+    private final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder().
+            connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(new Interceptor() {
+                @Override
+                public okhttp3.Response intercept(Chain chain) throws IOException {
+                    //获得请求信息，此处如有需要可以添加headers信息
+                    Request request = chain.request();
+                    //添加Cookie信息
+                    request.newBuilder().addHeader("Cookie", "aaaa");
+                    //打印请求信息
+                    syso("url:" + request.url());
+                    syso("method:" + request.method());
+                    syso("request-body:" + request.body().toString());
+
+                    //记录请求耗时
+                    long startNs = System.nanoTime();
+                    okhttp3.Response response;
+                    try {
+                        //发送请求，获得相应，
+                        response = chain.proceed(request);
+                    } catch (Exception e) {
+                        throw e;
+                    }
+                    long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
+                    //打印请求耗时
+                    syso("耗时:" + tookMs + "ms");
+                    //使用response获得headers(),可以更新本地Cookie。
+                    syso("headers==========");
+                    Headers headers = response.headers();
+                    syso(headers.toString());
+
+                    //获得返回的body，注意此处不要使用responseBody.string()获取返回数据，原因在于这个方法会消耗返回结果的数据(buffer)
+                    ResponseBody responseBody = response.body();
+
+                    //为了不消耗buffer，我们这里使用source先获得buffer对象，然后clone()后使用
+                    BufferedSource source = responseBody.source();
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                    //获得返回的数据
+                    Buffer buffer = source.buffer();
+                    //使用前clone()下，避免直接消耗
+                    syso("response:" + buffer.clone().readString(Charset.forName("UTF-8")));
+                    return response;
+                }
+            })
+            .build();
+
+    private static void syso(String msg) {
+        System.out.println(msg);
+    }
+
 }

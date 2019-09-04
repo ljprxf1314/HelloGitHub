@@ -1,5 +1,7 @@
 package com.ljp.hellogithub.net;
 
+import com.ljp.hellogithub.bean.BriefingBean;
+import com.ljp.hellogithub.bean.NewVersionBean;
 import com.ljp.hellogithub.bean.UserBean;
 
 import java.util.WeakHashMap;
@@ -43,6 +45,10 @@ public interface RestService {
     @FormUrlEncoded
     @POST
     Call<UserBean> postLogin(@Url String url, @FieldMap WeakHashMap<String, Object> params);
+
+    @FormUrlEncoded
+    @POST
+    Call<NewVersionBean> postGson(@Url String url, @FieldMap WeakHashMap<String, Object> params);
 
     @POST
     Call<String> postRaw(@Url String url, @Body RequestBody body);
