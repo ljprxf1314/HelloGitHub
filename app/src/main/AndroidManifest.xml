@@ -71,6 +71,7 @@
         <!-- ====UI布局activity=== -->
         <activity android:name=".ui.UIActivity"/>
         <activity android:name=".ui.constraint.ConstraintLayoutActivity"/>
+        <activity android:name=".ui.coordinator.CoordinatorLayoutActivity"/>
 
         <activity android:name=".ui.recycler.RecyclerViewMainActivity"/>
         <activity android:name=".ui.recycler.tworecyclerlist.RecyclerViewActivity"/>
