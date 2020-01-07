@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -20,7 +21,7 @@ import android.widget.Toast;
  * </pre>
  */
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends AppCompatActivity {
     /**
      * 键盘管理对象
      */

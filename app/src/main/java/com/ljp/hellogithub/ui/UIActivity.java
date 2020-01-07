@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
 import com.ljp.hellogithub.ui.constraint.ConstraintLayoutActivity;
+import com.ljp.hellogithub.ui.coordinator.CoordinatorLayoutActivity;
 import com.ljp.hellogithub.ui.recycler.RecyclerViewMainActivity;
 import com.ljp.hellogithub.ui.recycler.tworecyclerlist.RecyclerViewActivity;
 
@@ -38,7 +39,7 @@ public class UIActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_constraint,R.id.btn_recycler})
+    @OnClick({R.id.btn_constraint,R.id.btn_recycler,R.id.btn_coordinate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_constraint:
@@ -46,6 +47,9 @@ public class UIActivity extends BaseActivity {
                 break;
             case R.id.btn_recycler:
                 startActivity(RecyclerViewMainActivity.class);
+                break;
+            case R.id.btn_coordinate:
+                startActivity(CoordinatorLayoutActivity.class);
                 break;
         }
     }
