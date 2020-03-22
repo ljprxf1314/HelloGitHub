@@ -1,0 +1,4 @@
+1.在Thread中如何Toast一个消息,使用Looper
+2.如何禁止整个界面点击事件
+3.Handler如何将消息加入到ManageQueue中
+4.异常处理Exception

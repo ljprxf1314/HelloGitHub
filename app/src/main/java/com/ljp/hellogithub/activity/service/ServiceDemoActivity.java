@@ -42,6 +42,8 @@ public class ServiceDemoActivity extends BaseActivity implements ServiceConnecti
     @BindView(R.id.btn_stop_musice)
     Button mBtnStopMusice;
 
+    private HelloService.MyBinder myBinder;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +72,10 @@ public class ServiceDemoActivity extends BaseActivity implements ServiceConnecti
                 unbindService(this);
                 break;
             case R.id.btn_start_musice:
+                myBinder.startMusice();
                 break;
             case R.id.btn_stop_musice:
+                myBinder.stopMusice();
                 break;
 
         }
@@ -81,6 +85,7 @@ public class ServiceDemoActivity extends BaseActivity implements ServiceConnecti
     public void onServiceConnected(ComponentName name, IBinder service) {
         //只有当我们自己写的MyService的onBind方法返回值不为null时，才会被调用
         Log.e("call", "onServiceConnected");
+        myBinder = (HelloService.MyBinder) service;
     }
 
     @Override

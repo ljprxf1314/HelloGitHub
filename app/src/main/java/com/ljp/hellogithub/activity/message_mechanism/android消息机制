@@ -7,4 +7,10 @@
     5.Looper:通过prepare为当前线程创建一个Looper,接着通过loop来开始开启消息循环
              looper还提供了prepareMainLooper方法提供了给主线程(即ActivityThread)创建使用
              looper退出:quit直接退出,quitSafely设定一个标记退出
+             Looper构造方法中创建了一个MessageQueue,然后将当前线程的对象保存起来
+
+    6.可以在子线程中更新UI吗?
+    ViewRootImpl中的checkThread会检查当前线程和创建ViewRootImpl对象的线程是否在同一线程
+    在onCreate中开启子线程更新TextView中的文字也是可以的,因为这个时候还没有调用checkThread这个方法
+    只是调用时机不同而已
 

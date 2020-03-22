@@ -10,6 +10,7 @@ import com.ljp.hellogithub.activity.annotation.AnnotationMainActivity;
 import com.ljp.hellogithub.activity.io.FileIOMainActivity;
 import com.ljp.hellogithub.activity.message_mechanism.MessageMainActivity;
 import com.ljp.hellogithub.activity.message_mechanism.MessageMechanismActivity;
+import com.ljp.hellogithub.activity.mvp.MvpActivity;
 import com.ljp.hellogithub.activity.network.NetworkMainActivity;
 import com.ljp.hellogithub.activity.rxjava.RxJavaActivity;
 import com.ljp.hellogithub.activity.service.ServiceDemoActivity;
@@ -91,6 +92,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_network:
                 startActivity(NetworkMainActivity.class);
+                break;
+            case R.id.btn_mvp:
+                startActivity(MvpActivity.class);
                 break;
         }
     }

@@ -90,6 +90,13 @@
                 android:layout_height="wrap_content"
                 android:text="Okhttp3.0、Retrofit2.0网络框架学习"
                 android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btn_mvp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MVP设计模式"
+                android:textAllCaps="false"/>
         </LinearLayout>
 
     </ScrollView>

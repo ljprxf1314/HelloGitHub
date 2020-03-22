@@ -1,7 +1,10 @@
 package com.ljp.hellogithub.activity.message_mechanism;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Button;
@@ -28,6 +31,15 @@ public class MessageMainActivity extends BaseActivity {
 
     String TAG = "MessageMainActivity";
 
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +51,7 @@ public class MessageMainActivity extends BaseActivity {
             public void run() {
                 Log.e(TAG, "step 0 ");
                 Looper.prepare();
-                Toast.makeText(MessageMainActivity.this, "run on thread", Toast.LENGTH_SHORT);
+                Toast.makeText(MessageMainActivity.this, "run on thread", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "step 1 ");
                 Looper.loop();
                 Log.e(TAG, "step 2 ");
@@ -52,6 +64,8 @@ public class MessageMainActivity extends BaseActivity {
                 mTv1.setText("run on thread update textview!");
             }
         }).start();
+
+        //handler.sendEmptyMessageDelayed()
     }
 
     @OnClick(R.id.btn1)

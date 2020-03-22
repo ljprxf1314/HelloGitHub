@@ -38,5 +38,5 @@ onUnbind()==>onDestory()只调用一次
     ServiceConnection运行在主线程,在bindService成功或失败后调用ServiceConnection的方法
 
 ④ bindService后,service如何Activity进行数据交互操作
-    在service中实现onBind方法中返回继承了Binder的实现类,获取service的实例或进行接口回调操作
+    在service中onBind方法中返回继承了Binder的实现类,获取service的实例或进行接口回调操作
 

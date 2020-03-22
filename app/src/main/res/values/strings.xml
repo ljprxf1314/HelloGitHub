@@ -4,4 +4,5 @@
     <string name="title_activity_my_view">MyViewActivity</string>
     <string name="title_activity_handler_thread">HandlerThreadActivity</string>
     <string name="title_activity_thread_pool_executor">ThreadPoolExecutorActivity</string>
+    <string name="title_activity_mvp">MvpActivity</string>
 </resources>
