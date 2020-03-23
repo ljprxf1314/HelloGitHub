@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.btn_activity, R.id.btn_my_view, R.id.btn_service, R.id.btn_animation, R.id.btn_ui,
             R.id.btn_message, R.id.btn_threadpool, R.id.btn_fileio,
-            R.id.btn_rxjava, R.id.btn_annotation, R.id.btn_network})
+            R.id.btn_rxjava, R.id.btn_annotation, R.id.btn_network,R.id.btn_mvp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_activity:

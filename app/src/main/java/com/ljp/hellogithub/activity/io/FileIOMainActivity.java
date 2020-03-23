@@ -91,6 +91,9 @@ public class FileIOMainActivity extends BaseActivity implements DownloadCallback
     private static final String strPath = Environment
             .getExternalStorageDirectory() + "/downloadFile/text/";
 
+    public static final String sdUrlImg = Environment.getExternalStorageDirectory()
+            .getAbsolutePath() + "/haha";
+
     private int count = 3;
 
     @Override
@@ -108,7 +111,7 @@ public class FileIOMainActivity extends BaseActivity implements DownloadCallback
 //        futureTask.get();
     }
 
-    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3,R.id.btn4, R.id.btn5, R.id.btn6})
+    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3,R.id.btn4, R.id.btn5, R.id.btn6,R.id.btn7})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn1:
@@ -149,6 +152,15 @@ public class FileIOMainActivity extends BaseActivity implements DownloadCallback
                 break;
             case R.id.btn6:
                 randomAccessDownload();
+                break;
+            case R.id.btn7:
+                File file = new File(sdUrlImg);
+                if (file.exists()){
+                    Log.e(TAG,"文件存在");
+                }else{
+                    file.mkdirs();
+                    Log.e(TAG,"创建文件夹");
+                }
                 break;
         }
     }

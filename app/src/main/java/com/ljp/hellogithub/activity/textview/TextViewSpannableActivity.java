@@ -64,6 +64,8 @@ public class TextViewSpannableActivity extends BaseActivity {
     TextView mTv12;
     @BindView(R.id.tv13)
     TextView mTv13;
+    @BindView(R.id.tv)
+    TextView mTv;
 
     private int startIndex = 0;//起始下标
     private int endIndex = 1;//终止下标
@@ -77,7 +79,7 @@ public class TextViewSpannableActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         MmkvUtils.getInstance().saveLocation(108);
-        Log.e("MmkvUtils","读取位置参数:"+MmkvUtils.getInstance().readLocation());
+        Log.e("MmkvUtils", "读取位置参数:" + MmkvUtils.getInstance().readLocation());
 
         //了解SpannableString的使用
         //        flags属性就有意思了，共有四种属性：
@@ -144,7 +146,7 @@ public class TextViewSpannableActivity extends BaseActivity {
 
         //9.ImageSpan:设置文本表情
         SpannableString span9 = new SpannableString("在文本中添加表情(表情)");
-        Drawable drawable = ContextCompat.getDrawable(TextViewSpannableActivity.this,R.mipmap.ic_launcher);
+        Drawable drawable = ContextCompat.getDrawable(TextViewSpannableActivity.this, R.mipmap.ic_launcher);
         drawable.setBounds(0, 0, 42, 42);//设置边界
         ImageSpan imageSpan = new ImageSpan(drawable);
         span9.setSpan(imageSpan, 6, 8, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -183,8 +185,8 @@ public class TextViewSpannableActivity extends BaseActivity {
         SpannableString spannableString = new SpannableString("共累计签到23次");
         ForegroundColorSpan foregroundColorSpan1 = new ForegroundColorSpan(Color.parseColor("#0099EE"));
         RelativeSizeSpan relativeSizeSpan1 = new RelativeSizeSpan(1.8f);
-        spannableString.setSpan(foregroundColorSpan1,5,7,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(relativeSizeSpan1,5,7,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(foregroundColorSpan1, 5, 7, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(relativeSizeSpan1, 5, 7, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         mTv13.setText(spannableString);
 
     }
@@ -215,10 +217,12 @@ public class TextViewSpannableActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.tv1})
+    @OnClick({R.id.tv1,R.id.tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv1:
+                break;
+            case R.id.tv:
                 break;
         }
     }

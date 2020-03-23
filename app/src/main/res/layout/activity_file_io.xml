@@ -55,6 +55,12 @@
         android:layout_height="wrap_content"
         android:text="使用RandomAccessFile分段下载文件"/>
 
+    <Button
+        android:id="@+id/btn7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建文件夹"/>
+
     <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="80dp"

@@ -35,7 +35,8 @@ public class RecyclerOneAdapter extends RecyclerView.Adapter {
         MyViewHolder holder = new MyViewHolder(view);
 
         //单个商家的商品列表不需要滑动，所以在这里禁止掉商品item的滑动事件
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.VERTICAL, false) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.VERTICAL,
+                false) {
             @Override
             public boolean canScrollVertically() {
                 return false;

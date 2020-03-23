@@ -1,4 +1,4 @@
-package com.ljp.hellogithub.activity.mvp.presenter.veiw;
+package com.ljp.hellogithub.activity.mvp.view;
 
 /**
  * Created by Administrator on 2020/3/22.

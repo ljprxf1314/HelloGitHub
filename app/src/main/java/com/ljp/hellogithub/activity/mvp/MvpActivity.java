@@ -1,6 +1,7 @@
 package com.ljp.hellogithub.activity.mvp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.ljp.hellogithub.R;
+import com.ljp.hellogithub.activity.mvp.presenter.LoginPresenter;
+import com.ljp.hellogithub.activity.mvp.view.LoginView;
 import com.ljp.hellogithub.activity.rxjava.http.RetrofitClient;
 import com.ljp.hellogithub.base.BaseActivity;
 import com.ljp.hellogithub.net.RestClient;
@@ -22,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MvpActivity extends BaseActivity {
+public class MvpActivity extends BaseActivity implements LoginView{
 
     @BindView(R.id.account_iv)
     ImageView mAccountIv;
@@ -47,47 +50,64 @@ public class MvpActivity extends BaseActivity {
     @BindView(R.id.ll_main)
     LinearLayout mLlMain;
 
-    private String login = "/mobile/work/loginControl/login.action";
+
+    LoginPresenter mLoginPresenter;
     private WeakHashMap<String,String> params = new WeakHashMap<>();
+
+    private boolean isShowPassword = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvp);
         ButterKnife.bind(this);
+
+        mLoginPresenter = new LoginPresenter(this,this);
     }
 
     @OnClick({R.id.ll_eye, R.id.login_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_eye:
+                isShowPassword = !isShowPassword;
+                showPassword();
                 break;
             case R.id.login_btn:
                 params.put("logincode",mEtAccount.getText().toString());
                 params.put("pwd",mEtPwd.getText().toString());
-                login();
+                mLoginPresenter.login(params);
                 break;
         }
     }
 
-    private void login(){
-        RestClient.builder(String.class)
-                .url(login)
-                .loader(this)
-                .params(params)
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(Object obj) {
-                        showToast("登录成功");
-                    }
-                })
-                .error(new IError() {
-                    @Override
-                    public void onError(int code, String msg) {
-                        showToast("登录失败");
-                    }
-                })
-                .build()
-                .post();
+    @Override
+    public void showLoading() {
+    }
+
+    @Override
+    public void hideLoading() {
+    }
+
+    @Override
+    public void onError(String str) {
+        showToast(str);
+    }
+
+    @Override
+    public void onLoginResult(String result) {
+        showToast("登录成功");
+        Log.e("login",result);
+    }
+
+    private void showPassword() {
+        if (isShowPassword) {
+            mIvEye.setBackgroundResource(R.mipmap.i_login_eye_press);
+            mEtPwd.setInputType(0x90);
+            mEtPwd.setSelection(mEtPwd.getText().length());
+        } else {
+            mIvEye.setBackgroundResource(R.mipmap.i_login_eye_normal);
+            mEtPwd.setInputType(0x81);
+            mEtPwd.setSelection(mEtPwd.getText().length());
+        }
     }
 }
