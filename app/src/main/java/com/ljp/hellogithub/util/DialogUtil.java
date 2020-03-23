@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ljp.hellogithub.R;
+import com.ljp.hellogithub.view.PaintView;
+
+import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
 
 
 /**
@@ -53,7 +59,11 @@ public class DialogUtil {
         void center();
 
         void no();
+    }
 
+    public interface OnInputSignListener{
+        void ok(String imgSign,Bitmap bitmap);
+        void no();
     }
 
     /**
@@ -170,6 +180,84 @@ public class DialogUtil {
                         ViewGroup.LayoutParams.MATCH_PARENT));
         dialog.show();
         showAnimationCustom(view);
+    }
+
+    public static void showInputSign(Context context, Resources resources, final OnInputSignListener listener){
+        final Dialog dialog = new Dialog(context, R.style.Translucent_NoTitle);
+        final View view = LayoutInflater.from(context).inflate(
+                R.layout.mycustom_dialog_inputsign_layout, null);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        TextView tv_sign_sure,tv_sign_reset,tv_sign_cancel;
+        final PaintView my_signview = (PaintView) view.findViewById(R.id.my_signview);
+        tv_sign_sure = (TextView) view.findViewById(R.id.tv_sign_sure);
+        tv_sign_reset= (TextView) view.findViewById(R.id.tv_sign_reset);
+        tv_sign_cancel= (TextView) view.findViewById(R.id.tv_sign_cancel);
+
+        tv_sign_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!my_signview.isSign()){
+                    UIUtils.Toast("请先进行签名");
+                    return;
+                }
+                Bitmap bitmap = my_signview.getCachebBitmap();
+                String imgSign = bitmapToString(bitmap);
+                listener.ok(imgSign,bitmap);
+                dialog.dismiss();
+            }
+        });
+
+        tv_sign_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                listener.no();
+            }
+        });
+
+        tv_sign_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                my_signview.clear();
+            }
+        });
+
+        int width = resources.getDisplayMetrics().widthPixels;
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().addContentView(
+                view,
+                new ViewGroup.LayoutParams(width,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+        dialog.show();
+        showAnimationCustom(view);
+    }
+
+    //把bitmap转换成String
+    public static String bitmapToString(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //1.5M的压缩后在100Kb以内，测试得值,压缩后的大小=94486字节,压缩后的大小=74473字节
+        //这里的JPEG 如果换成PNG，那么压缩的就有600kB这样
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        Log.e("d-d", "压缩后的大小=" + b.length);
+        Log.e("压缩后的大小",String.format("Size : %s", getReadableFileSize(b.length)));
+        return Base64.encodeToString(b, Base64.DEFAULT);
+    }
+    public static String getReadableFileSize(long size) {
+        if (size <= 0) {
+            return "0";
+        }
+        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
     private static void showAnimationCustom(final View view) {
