@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.ljp.hellogithub.R;
 import com.ljp.hellogithub.base.BaseActivity;
+import com.ljp.hellogithub.ui.recycler.complex_grid.ComplexGridActivity;
 import com.ljp.hellogithub.ui.recycler.tworecyclerlist.RecyclerViewActivity;
 
 import butterknife.BindView;
@@ -28,6 +29,8 @@ public class RecyclerViewMainActivity extends BaseActivity {
     Button mBtnRecycler;
     @BindView(R.id.btn_decoration)
     Button mBtnDecoration;
+    @BindView(R.id.btn_complex_grid)
+    Button mBtnComplexGrid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class RecyclerViewMainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_recycler, R.id.btn_decoration})
+    @OnClick({R.id.btn_recycler, R.id.btn_decoration,R.id.btn_complex_grid})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_recycler://二级嵌套样式
@@ -44,6 +47,9 @@ public class RecyclerViewMainActivity extends BaseActivity {
                 break;
             case R.id.btn_decoration:
                 startActivity(RecyclerItemDecorationStyleActivity.class);
+                break;
+            case R.id.btn_complex_grid:
+                startActivity(ComplexGridActivity.class);
                 break;
         }
     }

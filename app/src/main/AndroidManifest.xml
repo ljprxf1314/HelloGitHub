@@ -75,6 +75,7 @@
         <activity android:name=".ui.recycler.RecyclerViewMainActivity"/>
         <activity android:name=".ui.recycler.tworecyclerlist.RecyclerViewActivity"/>
         <activity android:name=".ui.recycler.RecyclerItemDecorationStyleActivity"/>
+        <activity android:name=".ui.recycler.complex_grid.ComplexGridActivity"/>
 
         <!-- android消息机制 -->
         <activity android:name=".activity.message_mechanism.MessageMainActivity"/>
